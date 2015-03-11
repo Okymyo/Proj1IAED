@@ -43,6 +43,7 @@ int partners(Bank* bank){
 
 int main(int argc, char const *argv[]){
 	Bank* bank;
+
 	addBank("ola", 1, 10228);
 	addBank("cenas", 1, 927391);
 	addBank("stuff", 0, 910291);	

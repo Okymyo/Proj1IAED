@@ -3,7 +3,6 @@
 
 /*
 Bank** banks = NULL; 
->>>>>>> Array de bancos é agora dinâmico
 int banksNum = 0;
 
 

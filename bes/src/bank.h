@@ -8,7 +8,7 @@ typedef struct
 	char rating;
 	int reference;
 	int loansNum;
-	Loan loans[999];
+	Loan *loans;
 } Bank;
 
 void bank_init(Bank *bank, char *name, int rating, int reference);

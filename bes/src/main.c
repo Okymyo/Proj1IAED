@@ -5,10 +5,9 @@ Bank** banks = NULL;
 int banksNum = 0;
 
 void addBank(char *nome, char rating, int reference){
-	Bank bank;
-	bank_init(&bank, nome, rating, reference);
 	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
-	banks[banksNum] = &bank;
+	banks[banksNum] = calloc(1, sizeof(Bank));
+	bank_init(banks[banksNum], nome, rating, reference);
 	banksNum++;
 }
 

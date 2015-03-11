@@ -97,11 +97,10 @@ int requestInput()
 		}
 		default:
 		{
-			printf("ERROR! Unhandled user input! Aborting");
+			printf("ERROR! Unhandled user input! Aborting!");
 			return QUIT;
 		}
 	}
-	
 	return CONTINUE;
 }
 

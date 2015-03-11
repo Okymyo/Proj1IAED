@@ -14,7 +14,7 @@ void addBank(char *nome, char rating, int reference){
 Bank* bankByReference(int reference){
 	int i;
 	for (i = 0; i < banksNum; i++){
-		Bank* bank = &banks[i];
+		Bank* bank = banks[i];
 		if(bank_reference(bank) == reference){
 			return bank;
 		}	
@@ -25,7 +25,7 @@ Bank* bankByReference(int reference){
 int partners(Bank* bank){
 	int i, j, total = 0;
 	for (i = 0; i < banksNum; i++){
-		Bank* currentBank = &banks[i];
+		Bank* currentBank = banks[i];
 		for (j = 0; j < bank_loansNum(currentBank); j++){
 			Loan* currentLoan = bank_loan(currentBank, j);
 			if(loan_reference(currentLoan) == bank_reference(bank)){
@@ -49,12 +49,12 @@ int main(int argc, char const *argv[]){
 	addBank("stuff", 0, 910291);	
 	
 	bank = bankByReference(10228);
-	bank_addLoan(bank, bank_reference(&banks[1]), 1500);
-	bank_addLoan(bank, bank_reference(&banks[2]), 1500);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[2], bank_reference(bank), 2000);
+	bank_addLoan(bank, bank_reference(banks[1]), 1500);
+	bank_addLoan(bank, bank_reference(banks[2]), 1500);
+	bank_addLoan(banks[1], bank_reference(bank), 3000);
+	bank_addLoan(banks[1], bank_reference(bank), 3000);
+	bank_addLoan(banks[1], bank_reference(bank), 3000);
+	bank_addLoan(banks[2], bank_reference(bank), 2000);
 	printf("%d\n", partners(bank));
 
 	/*

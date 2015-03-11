@@ -18,6 +18,7 @@ void bank_addLoan(Bank* bank, int reference, int amount){
 		}
 	}
 	loan_init(&loan, reference, amount);
+	realloc(bank->loans, sizeof(Loan) * (bank->loansNum + 1));
 	bank->loans[bank->loansNum] = loan;
 	bank->loansNum++;
 }

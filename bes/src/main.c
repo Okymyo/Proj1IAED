@@ -2,15 +2,17 @@
 #include "main.h"
 
 /*
-Bank banks[1000]; 
+Bank** banks = NULL; 
+>>>>>>> Array de bancos é agora dinâmico
 int banksNum = 0;
 
 
 void addBank(char *nome, char rating, int reference){
 	Bank bank;
 	bank_init(&bank, nome, rating, reference);
-	banks[banksNum] = bank;
-	banksNum++;	
+	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
+	banks[banksNum] = &bank;
+	banksNum++;
 }
 
 Bank* bankByReference(int reference){

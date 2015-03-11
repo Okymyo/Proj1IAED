@@ -1,14 +1,15 @@
 #include "includes.h"
 #include "bank.h"
 
-Bank banks[1000]; 
+Bank** banks = NULL; 
 int banksNum = 0;
 
 void addBank(char *nome, char rating, int reference){
 	Bank bank;
 	bank_init(&bank, nome, rating, reference);
-	banks[banksNum] = bank;
-	banksNum++;	
+	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
+	banks[banksNum] = &bank;
+	banksNum++;
 }
 
 Bank* bankByReference(int reference){
@@ -68,10 +69,10 @@ int main(int argc, char const *argv[]){
 	printf("Recebemos estes emprestimos:\n");
 	for(i = 0; i < banksNum; i++){
 		tmp = banks[i];
-		for(j = 0; j < bank_loansNum(&tmp); j++){
-			loan = bank_loan(&tmp, j);
-			if(loan_reference(&loan) == bank_reference(bank)){
-				printf("\tLoan-> Reference: %d, Amount: %d\n", bank_reference(&tmp), loan_amount(&loan));
+		for(j = 0; j < bank_loansNum(tmp); j++){
+			loan = bank_loan(tmp, j);
+			if(loan_reference(&loan) == bank_reference(banks[0])){
+				printf("\tLoan-> Reference: %d, Amount: %d\n", bank_reference(tmp), loan_amount(&loan));
 			}
 		}
 	}*/

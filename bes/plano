@@ -1,0 +1,62 @@
+estrutura banco em array (em json)
+
+[
+	29172, //referencia
+	"ST0F", //nome
+	1, //rating
+	2, //emprestimos 
+	[
+		[
+			27162, //referecia
+			10000, //dinheiro emprestado
+		],
+		[
+			23632, //referecia
+			1999, //dinheiro emprestado
+		]
+	]
+]
+
+estrutura bancos/graph
+
+[
+	//BANCO A
+	[
+		29172, //referencia
+		"A", //nome
+		1, //rating
+		2, //emprestimos 
+		[
+			[
+				27162, //referecia
+				10000, //dinheiro emprestado
+			],
+			[
+				23632, //referecia
+				1999, //dinheiro emprestado
+			]
+		]
+	],
+
+
+	//BANCO B
+	[
+		239273, //referencia
+		"B", //nome
+		1, //rating
+		2, //emprestimos 
+		[
+			[
+				27162, //referecia
+				10000, //dinheiro emprestado
+			],
+			[
+				23632, //referecia
+				1999, //dinheiro emprestado
+			]
+		]
+	]
+
+
+
+]

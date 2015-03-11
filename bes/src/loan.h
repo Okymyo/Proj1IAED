@@ -7,7 +7,7 @@ typedef struct
 	int amount;
 } Loan;
 
-void load_init(Loan *loan, int reference, int amount);
+void loan_init(Loan *loan, int reference, int amount);
 
 int loan_reference(Loan *loan);
 

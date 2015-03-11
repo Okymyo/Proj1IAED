@@ -1,6 +1,6 @@
 #include "loan.h"
 
-void load_init(Loan *loan, int reference, int amount){
+void loan_init(Loan *loan, int reference, int amount){
 	loan->reference = reference;
 	loan->amount = amount;
 }

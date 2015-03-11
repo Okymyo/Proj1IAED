@@ -16,7 +16,7 @@ void bank_addLoan(Bank *bank, int reference, int amount){
 			return;
 		}
 	}
-	load_init(&loan, reference, amount);
+	loan_init(&loan, reference, amount);
 	bank->loans[bank->loansNum] = loan;
 	bank->loansNum++;
 }

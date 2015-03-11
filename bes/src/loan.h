@@ -1,3 +1,6 @@
+#pragma once
+#include "includes.h"
+
 typedef struct 
 {
 	int reference;

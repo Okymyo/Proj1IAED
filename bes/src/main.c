@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "bank.h"
+#include "main.h"
 
 Bank banks[1000]; 
 int banksNum = 0;

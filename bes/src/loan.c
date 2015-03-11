@@ -1,5 +1,4 @@
 #include "loan.h"
-#include <stdio.h>
 
 void load_init(Loan *loan, int reference, int amount){
 	loan->reference = reference;

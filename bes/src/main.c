@@ -9,7 +9,7 @@
 #define QUIT 11
 #define CONTINUE 17
 
-Bank** banks = NULL; 
+Bank **banks = NULL; 
 int banksNum = 0;
 
 void addBank(char *name, int rating, int reference){
@@ -29,14 +29,14 @@ Bank* bankByReference(int reference){
 	return NULL;
 }
 
-int partners(Bank* bank){
+int partners(Bank *bank){
 	int i, j, total = 0;
 	for (i = 0; i < banksNum; i++)
 	{
-		Bank* currentBank = banks[i];
+		Bank *currentBank = banks[i];
 		for (j = 0; j < bank_loansNum(currentBank); j++)
 		{
-			Loan* currentLoan = bank_loan(currentBank, j);
+			Loan *currentLoan = bank_loan(currentBank, j);
 			if(loan_reference(currentLoan) == bank_reference(bank))
 				if(bank_loanByReference(bank, bank_reference(currentBank)) == NULL)
 					total++;

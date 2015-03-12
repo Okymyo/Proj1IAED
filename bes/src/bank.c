@@ -11,15 +11,20 @@ void bank_init(Bank* bank, char* name, int rating, int reference){
 void bank_addLoan(Bank* bank, int reference, int amount){
 	int i;
 	Loan loan;
-	for (i = 0; i < bank->loansNum; i++){
-		if(loan_reference(&bank->loans[i]) == reference){
-			loan_updateAmount(&bank->loans[i], amount);
+	for (i = 0; i < bank_loansNum(bank); i++){
+		Loan *currentLoan = bank_loan(bank, i);
+		if(loan_reference(currentLoan) == reference){
+			loan_updateAmount(currentLoan, amount);
 			return;
 		}
 	}
 	loan_init(&loan, reference, amount);
-	bank->loans[bank->loansNum] = loan;
+	bank->loans[bank_loansNum(bank)] = loan;
 	bank->loansNum++;
+}
+
+Loan* bank_loan(Bank* bank, int id){
+	return &bank->loans[id];
 }
 
 Loan* bank_loanByReference(Bank* bank, int reference){
@@ -47,8 +52,4 @@ int bank_reference(Bank* bank){
 
 int bank_loansNum(Bank* bank){
 	return bank->loansNum;
-}
-
-Loan* bank_loan(Bank* bank, int id){
-	return &bank->loans[id];
 }

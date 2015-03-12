@@ -6,7 +6,7 @@
 typedef struct 
 {
 	int banksNum;
-	Bank banks[1000];
+	Bank *banks;
 } Network;	
 
 void network_init(Network *network);

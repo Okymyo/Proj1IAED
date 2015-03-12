@@ -5,8 +5,9 @@ void network_init(Network *network){
 }
 
 void network_addBank(Network *network, char *name, char rating, int reference){
-	Bank bank;
-	bank_init(&bank, name, rating, reference);
+	Bank *bank = calloc(1, sizeof(Bank));
+	bank_init(bank, name, rating, reference);
+	network = realloc(network->banks, sizeof(Bank)*(network->banksNum + 1));
 	network->banks[network->banksNum] = bank;
 	network->banksNum++;	
 }

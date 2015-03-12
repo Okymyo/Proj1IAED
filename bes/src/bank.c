@@ -10,7 +10,7 @@ void bank_init(Bank* bank, char* name, int rating, int reference){
 
 void bank_addLoan(Bank* bank, int reference, int amount){
 	int i;
-	Loan loan;
+	Loan *loan;
 	for (i = 0; i < bank_loansNum(bank); i++){
 		Loan *currentLoan = bank_loan(bank, i);
 		if(loan_reference(currentLoan) == reference){

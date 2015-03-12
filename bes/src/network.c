@@ -14,13 +14,13 @@ void network_addBank(Network *network, char *name, char rating, int reference){
 }
 
 Bank* network_bank(Network *network, int id){
-	return &network->banks[id];
+	return network->banks[id];
 }
 
 Bank* network_bankByReference(Network *network, int reference){
 	int i;
 	for (i = 0; i < network->banksNum; i++){
-		Bank *bank = &network->banks[i];
+		Bank *bank = network->banks[i];
 		if(bank_reference(bank) == reference)
 			return bank;
 	}
@@ -30,7 +30,7 @@ Bank* network_bankByReference(Network *network, int reference){
 int network_partners(Network *network, Bank *bank){
 	int i, j, total = 0;
 	for (i = 0; i < network->banksNum; i++){
-		Bank *currentBank = &network->banks[i];
+		Bank *currentBank = network->banks[i];
 		for (j = 0; j < currentBank->loansNum; j++){
 			Loan *currentLoan = &currentBank->loans[j];
 			if(currentLoan->reference == bank->reference){
@@ -47,6 +47,7 @@ int network_partners(Network *network, Bank *bank){
 
 int network_banksNum(Network *network){
 	return network->banksNum;
+}
 
 void network_terminate(Network *network)
 {

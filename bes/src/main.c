@@ -41,9 +41,11 @@ int partners(Bank* bank){
 
 int main(int argc, char const *argv[]){
 	Network *network;
+	network = malloc(sizeof(Network));
 	network_init(network);
 	network_addBank(network, "ola", 0, 18273);
 	network_addBank(network, "ola", 0, 18273);
 	printf("%d\n", network->banksNum);
+	network_terminate(network);
 	return 0;
 }

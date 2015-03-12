@@ -8,12 +8,12 @@ typedef struct
 	int amount;
 } Loan;
 
-void loan_init(Loan* loan, int reference, int amount);
+void loan_init(Loan *loan, int reference, int amount);
 
-void loan_setAmount(Loan* loan, int amount);
+void loan_setAmount(Loan *loan, int amount);
 
-void loan_updateAmount(Loan* loan, int delta);
+void loan_updateAmount(Loan *loan, int delta);
 
-int loan_reference(Loan* loan);
+int loan_reference(Loan *loan);
 
-int loan_amount(Loan* loan);
+int loan_amount(Loan *loan);

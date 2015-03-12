@@ -6,8 +6,12 @@ void network_init(Network *network){
 }
 
 void network_addBank(Network *network, char *name, char rating, int reference){
+	/* We should definitely check whether we receive a NULL pointer or not.
+	However, we can't really handle this. If it throws OOM, nothing we can do.
+	Might as well let it throw a segmentation fault, at least it's meaningful */
 	Bank *bank = malloc(sizeof(Bank));
 	bank_init(bank, name, rating, reference);
+	/* Same thing here as was said above */
 	network->banks = realloc(network->banks, sizeof(Bank*)*(network->banksNum + 1));
 	network->banks[network->banksNum] = bank;
 	network->banksNum++;	

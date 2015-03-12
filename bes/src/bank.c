@@ -11,7 +11,6 @@ void bank_init(Bank* bank, char* name, int rating, int reference){
 
 void bank_addLoan(Bank* bank, int reference, int amount){
 	int i;
-<<<<<<< HEAD
 	Loan *loan;
 	for (i = 0; i < bank_loansNum(bank); i++){
 		Loan *currentLoan = bank_loan(bank, i);
@@ -55,11 +54,4 @@ int bank_reference(Bank *bank){
 
 int bank_loansNum(Bank *bank){
 	return bank->loansNum;
-<<<<<<< HEAD
-=======
-}
-
-Loan* bank_loan(Bank *bank, int id){
-	return &bank->loans[id];
->>>>>>> Finished transition to fully dynamic memory usage
 }

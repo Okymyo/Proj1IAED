@@ -6,7 +6,7 @@
 typedef struct 
 {
 	int banksNum;
-	Bank banks[1000];
+	Bank **banks;
 } Network;	
 
 void network_init(Network *network);
@@ -20,3 +20,5 @@ Bank* network_bankByReference(Network *network, int reference);
 int network_partners(Network *network, Bank *bank);
 
 int network_banksNum(Network *network);
+
+void network_terminate(Network *network);

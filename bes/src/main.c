@@ -1,8 +1,10 @@
 #include "includes.h"
-#include "bank.h"
+#include "main.h"
 
+/*
 Bank banks[1000]; 
 int banksNum = 0;
+
 
 void addBank(char *nome, char rating, int reference){
 	Bank bank;
@@ -39,41 +41,13 @@ int partners(Bank* bank){
 	total+=bank_loansNum(bank);
 	return total;
 }
-
+*/
 
 int main(int argc, char const *argv[]){
-	Bank* bank;
-	addBank("ola", 1, 10228);
-	addBank("cenas", 1, 927391);
-	addBank("stuff", 0, 910291);	
-	
-	bank = bankByReference(10228);
-	bank_addLoan(bank, bank_reference(&banks[1]), 1500);
-	bank_addLoan(bank, bank_reference(&banks[2]), 1500);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[1], bank_reference(bank), 3000);
-	bank_addLoan(&banks[2], bank_reference(bank), 2000);
-	printf("%d\n", partners(bank));
-
-	/*
-	n = bank_loansNum(bank);
-	printf("O banco com referencia %d e nome %s fez %d emprestimos:\n", bank_reference(bank),
-	 bank_name(bank), n);
-	for (i = 0; i < n; i++){
-		loan = bank_loan(bank, i);
-		printf("\tLoan-> Reference: %d, Amount: %d\n", loan_reference(&loan), loan_amount(&loan));
-	}
-
-	printf("Recebemos estes emprestimos:\n");
-	for(i = 0; i < banksNum; i++){
-		tmp = banks[i];
-		for(j = 0; j < bank_loansNum(&tmp); j++){
-			loan = bank_loan(&tmp, j);
-			if(loan_reference(&loan) == bank_reference(bank)){
-				printf("\tLoan-> Reference: %d, Amount: %d\n", bank_reference(&tmp), loan_amount(&loan));
-			}
-		}
-	}*/
+	Network network;
+	network_init(&network);
+	network_addBank(&network, "ola", 0, 18273);
+	network_addBank(&network, "ola", 0, 18273);
+	printf("%d\n", network.banksNum);
 	return 0;
 }

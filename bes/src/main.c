@@ -5,15 +5,14 @@
 #define CONTINUE 17
 
 /*
-=======
-#define QUIT 11
-#define CONTINUE 17
-
 Bank **banks = NULL; 
 int banksNum = 0;
 
 void addBank(char *name, int rating, int reference){
-	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
+	/* We should definitely check whether we receive a NULL pointer or not.
+	However, we can't really handle this. If it throws OOM, nothing we can do.
+	Might as well let it throw a segmentation fault, at least it's meaningful */
+/*	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
 	banks[banksNum] = calloc(1, sizeof(Bank));
 	bank_init(banks[banksNum], name, rating, reference);
 	banksNum++;
@@ -113,8 +112,11 @@ int requestInput()
 int main(int argc, char const *argv[]){
 	Network network;
 	network_init(&network);
+	/*while (requestInput() != QUIT){}*/
 	network_addBank(&network, "ola", 0, 18273);
 	network_addBank(&network, "ola", 0, 18273);
 	printf("%d\n", network.banksNum);
+	
+	printf("Size of Bank/Loan/Bank*/Loan*: %d/%d/%d/%d\n", sizeof(Bank), sizeof(Loan), sizeof(Bank*), sizeof(Loan*));
 	return 0;
 }

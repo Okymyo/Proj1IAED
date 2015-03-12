@@ -8,6 +8,9 @@ Bank **banks = NULL;
 int banksNum = 0;
 
 void addBank(char *name, int rating, int reference){
+	/* We should definitely check whether we receive a NULL pointer or not.
+	However, we can't really handle this. If it throws OOM, nothing we can do.
+	Might as well let it throw a segmentation fault, at least it's meaningful */
 	banks = realloc(banks, sizeof(Bank*)*(banksNum + 1));
 	banks[banksNum] = calloc(1, sizeof(Bank));
 	bank_init(banks[banksNum], name, rating, reference);
@@ -105,7 +108,7 @@ int requestInput()
 }
 
 int main(int argc, char const *argv[]){
-	while (requestInput() != QUIT){}
+	/*while (requestInput() != QUIT){}*/
 
 	addBank("ola", 1, 10228);
 	addBank("cenas", 1, 927391);
@@ -118,6 +121,8 @@ int main(int argc, char const *argv[]){
 	bank_addLoan(banks[1], bank_reference(banks[0]), 3000);
 	bank_addLoan(banks[2], bank_reference(banks[0]), 2000);
 	printf("%d\n", partners(banks[0]));
+	
+	printf("Size of Bank/Loan/Bank*/Loan*: %d/%d/%d/%d\n", sizeof(Bank), sizeof(Loan), sizeof(Bank*), sizeof(Loan*));
 
 	return 0;
 }

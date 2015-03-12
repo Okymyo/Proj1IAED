@@ -10,14 +10,15 @@ void bank_init(Bank* bank, char* name, int rating, int reference){
 
 void bank_addLoan(Bank* bank, int reference, int amount){
 	int i;
-	Loan loan;
+	Loan *loan;
 	for (i = 0; i < bank->loansNum; i++){
-		if(loan_reference(&bank->loans[i]) == reference){
-			loan_updateAmount(&bank->loans[i], amount);
+		if(loan_reference(bank->loans[i]) == reference){
+			loan_updateAmount(bank->loans[i], amount);
 			return;
 		}
 	}
-	loan_init(&loan, reference, amount);
+	loan = malloc(
+	loan_init(loan, reference, amount);
 	bank->loans[bank->loansNum] = loan;
 	bank->loansNum++;
 }

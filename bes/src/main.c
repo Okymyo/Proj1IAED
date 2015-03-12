@@ -2,10 +2,6 @@
 #include "main.h"
 
 /*
-Bank banks[1000]; 
-int banksNum = 0;
-
-
 void addBank(char *nome, char rating, int reference){
 	Bank bank;
 	bank_init(&bank, nome, rating, reference);
@@ -44,10 +40,10 @@ int partners(Bank* bank){
 */
 
 int main(int argc, char const *argv[]){
-	Network network;
-	network_init(&network);
-	network_addBank(&network, "ola", 0, 18273);
-	network_addBank(&network, "ola", 0, 18273);
-	printf("%d\n", network.banksNum);
+	Network *network;
+	network_init(network);
+	network_addBank(network, "ola", 0, 18273);
+	network_addBank(network, "ola", 0, 18273);
+	printf("%d\n", network->banksNum);
 	return 0;
 }

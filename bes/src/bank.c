@@ -38,7 +38,7 @@ Loan* bank_loanByReference(Bank *bank, int reference){
 		Loan *currentLoan = bank_loan(bank, i);
 		if(loan_reference(currentLoan) == reference){
 			return currentLoan;
-		} 
+		}
 	}
 	return NULL;
 }

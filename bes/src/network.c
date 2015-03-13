@@ -38,8 +38,7 @@ int network_partners(Network *network, Bank *bank){
 		for (j = 0; j < currentBank->loansNum; j++){
 			Loan *currentLoan = &currentBank->loans[j];
 			if(currentLoan->reference == bank->reference){
-				if(bank_loanByReference(bank, bank_reference(currentBank)) 
-					== NULL){
+				if(bank_loanByReference(bank, bank_reference(currentBank)) == NULL){
 					total++;
 				}
 			}

@@ -27,3 +27,5 @@ char bank_rating(Bank *bank);
 int bank_reference(Bank *bank);
 
 int bank_loansNum(Bank *bank);
+
+void bank_setRating(Bank *bank, char rating);

@@ -56,11 +56,8 @@ void network_terminate(Network *network)
 {
 	int i;
 	for (i = 0; i < network->banksNum; i++)
-	{
-		/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
-		free(network->banks[i]->loans);
-		free(network->banks[i]);
-	}
+		bank_terminate(network->banks[i]);
+		
 	free(network->banks);
 	free(network);
 }

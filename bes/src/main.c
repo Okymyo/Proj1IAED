@@ -4,7 +4,7 @@
 #define QUIT 11
 #define CONTINUE 17
 
-int requestInput()
+int requestInput(Network *network)
 {
 	switch(getchar())
 	{
@@ -42,11 +42,21 @@ int requestInput()
 		}
 		case 'p':
 		{
-			/* STATUS: Needs rework on existing functions before implementation */
 			int reference1;
 			int reference2;
 			int amount;
+			Loan *loan;
+			Bank *bank;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
+			
+			/* Since we're using it twice, store both loan and bank */
+			bank = network_bankByReference(network, reference2);
+			loan = bank_loanByLoanee(bank, network_bankByReference(network, reference1));
+			
+			/* Update loan. If it becomes 0 or negative, it'll return True, to deallocate loan */
+			if(loan_updateAmount(loan, (-1)*amount))
+				bank_delLoan(bank, loan);
+			
 			break;
 		}
 		case 'l':
@@ -73,13 +83,14 @@ int requestInput()
 		}
 	}
 	return CONTINUE;
+}
 
 int main(int argc, char const *argv[]){
 	Network *network;
 	network = malloc(sizeof(Network));
 	network_init(network);
 	
-	/*while (requestInput() != QUIT){}*/
+	/*while (requestInput(network) != QUIT){}*/
 	
 	network_addBank(network, "ola", 1, 18273);
 	network_addBank(network, "stuff", 1, 19281);
@@ -87,12 +98,16 @@ int main(int argc, char const *argv[]){
 	
 	bank_addLoan(network_bank(network, 1), network_bankByReference(network, 18273), 17363);
 	bank_addLoan(network_bank(network, 2), network_bankByReference(network, 18273), 123);
-	bank_addLoan(network_bank(network, 0), network_bankByReference(network, 19281), 1223);
+	
+	fflush(stdin);
+	requestInput(network);
 
 	printf("Numero de parceiros do %s: %d\n", 
 		bank_name(network_bank(network, 0)),
 		network_partners(network, network_bank(network, 0)));
-
+	
+	
+	
 	network_terminate(network);
 	return 0;
 }

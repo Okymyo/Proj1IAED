@@ -5,9 +5,9 @@
 
 void loan_init(Loan *loan, Bank *loanee, int amount);
 
-void loan_setAmount(Loan *loan, int amount);
+int loan_setAmount(Loan *loan, int amount);
 
-void loan_updateAmount(Loan *loan, int delta);
+int loan_updateAmount(Loan *loan, int delta);
 
 Bank* loan_loanee(Loan *loan);
 

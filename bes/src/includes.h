@@ -1,8 +1,9 @@
 #pragma once
+
 /* Standard includes */
 #include <stdio.h>		/* Required for input/output */
 #include <stdlib.h>		/* Required for malloc(), calloc(), realloc(), free */
-#include <stdbool.h>	/* Required for booleans */
+#include <string.h>		/* Required for memcpy() */
 
 /* General structures */
 typedef struct Network Network;

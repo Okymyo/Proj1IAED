@@ -28,6 +28,24 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 	bank->loansNum++;
 }
 
+void bank_delLoan(Bank *bank, Loan *loan){
+	Loan *loans;
+	int index;
+	
+	for(index = 0; index < bank->loansNum; index++)
+	{
+		if(loan == &bank->loans[index])
+			break;
+	}
+	
+	loans = malloc(sizeof(Loan)*(bank->loansNum -1));
+	memcpy(loans, bank->loans, (index)*sizeof(Loan));
+	memcpy(loans+index, bank->loans + index + 1, (bank->loansNum - index - 1)*sizeof(Loan));
+    free(bank->loans);
+    bank->loans = loans;
+	bank->loansNum--;
+}
+
 Loan* bank_loan(Bank *bank, int id){
 	return &bank->loans[id];
 }
@@ -61,4 +79,10 @@ int bank_loansNum(Bank *bank){
 
 void bank_setRating(Bank *bank, char rating){
 	bank->rating = rating;
+}
+
+void bank_terminate(Bank *bank){
+	/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
+	free(bank->loans);
+	free(bank);
 }

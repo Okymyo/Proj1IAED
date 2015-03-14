@@ -6,12 +6,17 @@ void loan_init(Loan *loan, Bank *loanee, int amount){
 	loan->amount = amount;
 }
 
-void loan_setAmount(Loan *loan, int amount){
-	loan->amount = amount;
+int loan_setAmount(Loan *loan, int amount){
+	if (amount > 0)
+	{
+		loan->amount = amount;
+		return 0;
+	}
+	return 1;
 }
 
-void loan_updateAmount(Loan *loan, int delta){
-	loan_setAmount(loan, loan_amount(loan)+delta);
+int loan_updateAmount(Loan *loan, int delta){
+	return loan_setAmount(loan, loan_amount(loan)+delta);
 }
 
 Bank* loan_loanee(Loan *loan){

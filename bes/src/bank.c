@@ -58,3 +58,7 @@ int bank_reference(Bank *bank){
 int bank_loansNum(Bank *bank){
 	return bank->loansNum;
 }
+
+void bank_setRating(Bank *bank, char rating){
+	bank->rating = rating;
+}

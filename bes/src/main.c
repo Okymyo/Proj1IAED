@@ -10,6 +10,7 @@ int requestInput()
 	{
 		case 'a':
 		{
+			/* STATUS: Can be implemented with existing functions */
 			char name[40];
 			int rating;
 			int reference;
@@ -18,18 +19,21 @@ int requestInput()
 		}
 		case 'k':
 		{
+			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
 			break;
 		}
 		case 'r':
 		{
+			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
 			break;
 		}
 		case 'e':
 		{
+			/* STATUS: Can be implemented with existing functions */
 			int reference1;
 			int reference2;
 			int amount;
@@ -38,6 +42,7 @@ int requestInput()
 		}
 		case 'p':
 		{
+			/* STATUS: Needs rework on existing functions before implementation */
 			int reference1;
 			int reference2;
 			int amount;
@@ -46,16 +51,19 @@ int requestInput()
 		}
 		case 'l':
 		{
+			/* STATUS: Unknown */
 			int type;
 			scanf("%d", &type);
 			break;
 		}
 		case 'K':
 		{
+			/* STATUS: Requires new function to be implemented */
 			break;
 		}
 		case 'x':
 		{
+			/* STATUS: Can be implemented */
 			return QUIT;
 		}
 		default:
@@ -65,7 +73,6 @@ int requestInput()
 		}
 	}
 	return CONTINUE;
-}
 
 int main(int argc, char const *argv[]){
 	Network *network;

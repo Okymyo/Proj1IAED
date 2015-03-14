@@ -1,19 +1,14 @@
 #pragma once
 
 #include "includes.h"
+#include "bank.h"
 
-typedef struct 
-{
-	int reference;
-	int amount;
-} Loan;
-
-void loan_init(Loan *loan, int reference, int amount);
+void loan_init(Loan *loan, Bank *loanee, int amount);
 
 void loan_setAmount(Loan *loan, int amount);
 
 void loan_updateAmount(Loan *loan, int delta);
 
-int loan_reference(Loan *loan);
+Bank* loan_loanee(Loan *loan);
 
 int loan_amount(Loan *loan);

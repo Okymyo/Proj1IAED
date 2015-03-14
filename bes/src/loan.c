@@ -1,8 +1,8 @@
 #include "includes.h"
 #include "loan.h"
 
-void loan_init(Loan *loan, int reference, int amount){
-	loan->reference = reference;
+void loan_init(Loan *loan, Bank *loanee, int amount){
+	loan->loanee = loanee;
 	loan->amount = amount;
 }
 
@@ -14,8 +14,8 @@ void loan_updateAmount(Loan *loan, int delta){
 	loan_setAmount(loan, loan_amount(loan)+delta);
 }
 
-int loan_reference(Loan *loan){
-	return loan->reference;
+Bank* loan_loanee(Loan *loan){
+	return loan->loanee;
 }
 
 int loan_amount(Loan *loan){

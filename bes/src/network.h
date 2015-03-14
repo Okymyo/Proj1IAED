@@ -1,13 +1,7 @@
 #pragma once
 
 #include "includes.h"
-#include "bank.h"
-
-typedef struct 
-{
-	int banksNum;
-	Bank **banks;
-} Network;	
+#include "bank.h"	
 
 void network_init(Network *network);
 

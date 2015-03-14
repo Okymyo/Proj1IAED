@@ -9,12 +9,12 @@ void bank_init(Bank *bank, char *name, int rating, int reference){
 	bank->loans = NULL;
 }
 
-void bank_addLoan(Bank *bank, int reference, int amount){
+void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 	int i;
 	Loan loan;
 	for (i = 0; i < bank_loansNum(bank); i++){
 		Loan *currentLoan = bank_loan(bank, i);
-		if(loan_reference(currentLoan) == reference){
+		if(loan_loanee(currentLoan) == loanee){
 			loan_updateAmount(currentLoan, amount);
 			return;
 		}
@@ -24,7 +24,7 @@ void bank_addLoan(Bank *bank, int reference, int amount){
 	Might as well let it throw a segmentation fault, at least it's meaningful */
 	bank->loans = realloc(bank->loans, sizeof(Loan)*(bank->loansNum + 1));
 	bank->loans[bank->loansNum] = loan;
-	loan_init(&bank->loans[bank->loansNum], reference, amount);
+	loan_init(&bank->loans[bank->loansNum], loanee, amount);
 	bank->loansNum++;
 }
 
@@ -32,11 +32,11 @@ Loan* bank_loan(Bank *bank, int id){
 	return &bank->loans[id];
 }
 
-Loan* bank_loanByReference(Bank *bank, int reference){
+Loan* bank_loanByLoanee(Bank *bank, Bank *loanee){
 	int i;
 	for (i = 0; i < bank->loansNum; i++){
 		Loan *currentLoan = bank_loan(bank, i);
-		if(loan_reference(currentLoan) == reference){
+		if(loan_loanee(currentLoan) == loanee){
 			return currentLoan;
 		}
 	}
@@ -57,8 +57,4 @@ int bank_reference(Bank *bank){
 
 int bank_loansNum(Bank *bank){
 	return bank->loansNum;
-}
-
-void bank_setRating(Bank *bank, char rating){
-	bank->rating = rating;
 }

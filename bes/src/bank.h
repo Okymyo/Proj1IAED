@@ -3,20 +3,11 @@
 #include "includes.h"
 #include "loan.h"
 
-typedef struct 
-{
-	char *name;
-	char rating;
-	int reference;
-	int loansNum;
-	Loan *loans;
-} Bank;
-
 void bank_init(Bank *bank, char *name, int rating, int reference);
 
-void bank_addLoan(Bank *bank, int reference, int amount);
+void bank_addLoan(Bank *bank, Bank *loanee, int amount);
 
-Loan* bank_loanByReference(Bank *bank, int reference);
+Loan* bank_loanByLoanee(Bank *bank, Bank *loanee);
 
 Loan* bank_loan(Bank *bank, int id);
 
@@ -27,5 +18,3 @@ char bank_rating(Bank *bank);
 int bank_reference(Bank *bank);
 
 int bank_loansNum(Bank *bank);
-
-void bank_setRating(Bank *bank, char rating);

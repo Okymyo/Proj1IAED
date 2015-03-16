@@ -3,6 +3,7 @@
 
 #define QUIT 11
 #define CONTINUE 17
+#define NAMESIZE 41 /* 40 + 1 for '\0' */
 
 int requestInput(Network *network)
 {
@@ -11,9 +12,10 @@ int requestInput(Network *network)
 		case 'a':
 		{
 			/* STATUS: Can be implemented with existing functions */
-			char name[40];
+			char *name;
 			int rating;
 			int reference;
+			name = malloc(NAMESIZE*sizeof(char));
 			scanf("%s %d %d", name, &rating, &reference);
 			printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference);
 			network_addBank(network, name, rating, reference);

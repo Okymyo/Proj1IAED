@@ -5,6 +5,18 @@
 #define CONTINUE 17
 #define NAMESIZE 41 /* 40 + 1 for '\0' */
 
+/* COMMENT TO DELETE... INTRODUCE EACH LINE INSIDE EACH "CASE" (COMMAND).
+IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
+	√ a: add new bank
+	√ k: rate bank as trash
+	√ r: rate bank as healthy
+	√ e: add new loan
+	√ p: add amortization
+	√ l: list banks
+	√ K: demote bank
+	√ x: QUIT
+*/
+
 int requestInput(Network *network)
 {
 	switch(getchar())
@@ -26,6 +38,7 @@ int requestInput(Network *network)
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
+			/* bank_setRating(bank, 0) MISSING: Use reference to pull correct bank*/
 			break;
 		}
 		case 'r':
@@ -33,6 +46,7 @@ int requestInput(Network *network)
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
+			/* bank_setRating(bank, 1) MISSING: Use reference to pull correct bank*/
 			break;
 		}
 		case 'e':
@@ -82,13 +96,16 @@ int requestInput(Network *network)
 		}
 		case 'x':
 		{
-			/* STATUS: Can be implemented */
+			/* STATUS: Can be implemented 
+			Command "x": Quit program */
 			return QUIT;
 		}
 		default:
 		{
 			printf("ERROR! Unhandled user input! Aborting!");
-			return QUIT;
+			/* There's no need to quit everytime we "mis-enter" a command.
+			As said on the project guide: wrong command -> back to start.
+			return QUIT; */
 		}
 	}
 	/* We never discarded chars in excess from the input buffer.

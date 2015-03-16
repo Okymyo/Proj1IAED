@@ -28,7 +28,7 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 	bank->loansNum++;
 }
 
-void bank_delLoan(Bank *bank, Loan *loan){
+void bank_deleteLoan(Bank *bank, Loan *loan){
 	Loan *loans;
 	int index;
 	

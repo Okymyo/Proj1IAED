@@ -3,4 +3,4 @@
 #include "includes.h"
 #include "network.h"
 
-int RequestInput(Network *network);
+int requestInput(Network *network);

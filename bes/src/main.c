@@ -55,7 +55,7 @@ int requestInput(Network *network)
 			
 			/* Update loan. If it becomes 0 or negative, it'll return True, to deallocate loan */
 			if(loan_updateAmount(loan, (-1)*amount))
-				bank_delLoan(bank, loan);
+				bank_deleteLoan(bank, loan);
 			
 			break;
 		}

@@ -7,7 +7,7 @@ void bank_init(Bank *bank, char *name, int rating, int reference);
 
 void bank_addLoan(Bank *bank, Bank *loanee, int amount);
 
-void bank_deleteLoan(Bank *bank, Loan *loan);
+void bank_removeLoan(Bank *bank, Loan *loan);
 
 Loan* bank_loanByLoanee(Bank *bank, Bank *loanee);
 

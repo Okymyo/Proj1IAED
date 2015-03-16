@@ -16,6 +16,7 @@ int requestInput(Network *network)
 			int reference;
 			scanf("%s %d %d", name, &rating, &reference);
 			printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference);
+			network_addBank(network, name, rating, reference);
 			break;
 		}
 		case 'k':
@@ -56,15 +57,20 @@ int requestInput(Network *network)
 			
 			/* Update loan. If it becomes 0 or negative, it'll return True, to deallocate loan */
 			if(loan_updateAmount(loan, (-1)*amount))
-				bank_deleteLoan(bank, loan);
+				bank_removeLoan(bank, loan);
 			
 			break;
 		}
 		case 'l':
 		{
 			/* STATUS: Unknown */
-			int type;
+			int i, type;
 			scanf("%d", &type);
+			printf("Temos %d bancos.\n", network->banksNum);
+			for (i = 0; i < network->banksNum; i++){
+				Bank *currentBank = network->banks[i];
+				printf("Banco -> Nome: %s, Ranking: %d, Referencia: %d\n", currentBank->name, currentBank->rating, currentBank->reference);
+			}
 			break;
 		}
 		case 'K':

@@ -6,7 +6,6 @@
 
 int requestInput(Network *network)
 {
-	fflush(stdin);
 	switch(getchar())
 	{
 		case 'a':
@@ -15,7 +14,7 @@ int requestInput(Network *network)
 			char name[40];
 			int rating;
 			int reference;
-			scanf("%s %d %d*", name, &rating, &reference);
+			scanf("%s %d %d", name, &rating, &reference);
 			printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference);
 			break;
 		}
@@ -84,6 +83,9 @@ int requestInput(Network *network)
 			return QUIT;
 		}
 	}
+	/* We never discarded chars in excess from the input buffer.
+	It's a good idea to do that now or else they'll get read. */
+	while ( getchar() != '\n' );
 	return CONTINUE;
 }
 
@@ -92,25 +94,8 @@ int main(int argc, char const *argv[]){
 	network = malloc(sizeof(Network));
 	network_init(network);
 	
-	while (requestInput(network) != QUIT){}
-	return 0;
-	
-	network_addBank(network, "ola", 1, 18273);
-	network_addBank(network, "stuff", 1, 19281);
-	network_addBank(network, "coisas", 1, 1647);
-	
-	bank_addLoan(network_bank(network, 1), network_bankByReference(network, 18273), 17363);
-	bank_addLoan(network_bank(network, 2), network_bankByReference(network, 18273), 123);
-	
-	fflush(stdin);
-	requestInput(network);
+	while (requestInput(network) != QUIT);
 
-	printf("Numero de parceiros do %s: %d\n", 
-		bank_name(network_bank(network, 0)),
-		network_partners(network, network_bank(network, 0)));
-	
-	
-	
 	network_terminate(network);
 	return 0;
 }

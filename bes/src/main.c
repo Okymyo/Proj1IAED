@@ -101,7 +101,7 @@ int requestInput(Network *network)
 			*/
 			int type;
 			scanf("%d", &type);
-			network_list(network, type);
+			network_listBanks(network, type);
 			break;
 		}
 		case 'K':

@@ -5,6 +5,14 @@ void network_init(Network *network){
 	network->banks = NULL;
 }
 
+void network_terminate(Network *network) {
+	int i;
+	for (i = 0; i < network->banksNum; i++)
+		bank_terminate(network->banks[i]);
+	free(network->banks);
+	free(network);
+}
+
 void network_addBank(Network *network, char *name, char rating, int reference) {
 	/* We should definitely check whether we receive a NULL pointer or not.
 	However, we can't really handle this. If it throws OOM, nothing we can do.
@@ -21,27 +29,27 @@ void network_addBank(Network *network, char *name, char rating, int reference) {
     printf("ERROR! Reference is already being used.\n");
 }
 
-void network_list(Network *network, int type){
+void network_listBanks(Network *network, int type){
 	int i;
 	switch(type){
 		case 0:{
-			for (i = 0; i < network->banksNum; i++){
-				Bank *bank = network->banks[i];
+			for (i = 0; i < network_banksNum(network); i++){
+				Bank *bank = network_bank(network, i);
 				printf("Bank -> Referencia:%d, Nome:%s, Rating:%d\n", 
-					bank->reference, 
-					bank->name, 
-					bank->rating
+					bank_reference(bank), 
+					bank_name(bank), 
+					bank_rating(bank)
 				);
 			}
 			break;
 		}
 		case 1:{
-			for (i = 0; i < network->banksNum; i++){
-				Bank *bank = network->banks[i];
+			for (i = 0; i < network_banksNum(network); i++){
+				Bank *bank = network_bank(network, i);
 				printf("Bank -> Referencia:%d, Nome:%s, Rating:%d, Emprestimos recebidos:%d, Emprestimos feitos: %d, Emprestamos:%d dos quais %d sao a bancos maus, Recebemos:%d dos quais %d sao de bancos maus.\n", 
-					bank->reference, 
-					bank->name, 
-					bank->rating,
+					bank_reference(bank), 
+					bank_name(bank), 
+					bank_rating(bank),
 					network_loaners(network, bank),
 					bank_loansNum(bank),
 					bank_totalLoaned(bank, 0),
@@ -67,8 +75,8 @@ Bank* network_bank(Network *network, int id) {
 
 Bank* network_bankByReference(Network *network, int reference) {
 	int i;
-	for (i = 0; i < network->banksNum; i++){
-		Bank *bank = network->banks[i];
+	for (i = 0; i < network_banksNum(network); i++){
+		Bank *bank = network_bank(network, i);
 		if(bank_reference(bank) == reference)
 			return bank;
 	}
@@ -77,11 +85,11 @@ Bank* network_bankByReference(Network *network, int reference) {
 
 int network_partners(Network *network, Bank *bank) {
 	int i, j, total = 0;
-	for (i = 0; i < network->banksNum; i++){
-		Bank *currentBank = network->banks[i];
-		for (j = 0; j < currentBank->loansNum; j++){
-			Loan *currentLoan = &currentBank->loans[j];
-			if(currentLoan->loanee == bank){
+	for (i = 0; i < network_banksNum(network); i++){
+		Bank *currentBank = network_bank(network, i);
+		for (j = 0; j < bank_loansNum(currentBank); j++){
+			Loan *currentLoan = bank_loan(currentBank, j);
+			if(loan_loanee(currentLoan) == bank){
 				if(bank_loanByLoanee(bank, currentBank) == NULL) {
 					total++;
 				}
@@ -94,11 +102,11 @@ int network_partners(Network *network, Bank *bank) {
 
 int network_loaners(Network *network, Bank *bank){
 	int i, j, total = 0;
-	for (i = 0; i < network->banksNum; i++){
-		Bank *currentBank = network->banks[i];
-		for (j = 0; j < currentBank->loansNum; j++){
-			Loan *currentLoan = &currentBank->loans[j];
-			if(currentLoan->loanee == bank){
+	for (i = 0; i < network_banksNum(network); i++){
+		Bank *currentBank = network_bank(network, i);
+		for (j = 0; j < bank_loansNum(currentBank); j++){
+			Loan *currentLoan = bank_loan(currentBank, j);
+			if(loan_loanee(currentLoan) == bank){
 				total++;
 			}
 		}
@@ -108,16 +116,16 @@ int network_loaners(Network *network, Bank *bank){
 
 int network_totalLoaned(Network *network, Bank *bank, int filter){
 	int i, j, total = 0, totalFiltered = 0;
-	for (i = 0; i < network->banksNum; i++){
-		Bank *currentBank = network->banks[i];
-		for (j = 0; j < currentBank->loansNum; j++){
-			Loan *currentLoan = &currentBank->loans[j];
-			if(currentLoan->loanee == bank){
-				int amount = currentLoan->amount;
-				if(filter && currentBank->rating == 0){
+	for(i = 0; i < network_banksNum(network); i++){
+		Bank *currentBank = network_bank(network, i);
+		for (j = 0; j < bank_loansNum(currentBank); j++){
+			Loan *currentLoan = bank_loan(currentBank, j);
+			if(loan_loanee(currentLoan) == bank){
+				int amount = loan_amount(currentLoan);
+				if(filter && bank_rating(currentBank) == 0){
 					totalFiltered += amount;
 				}
-				total += amount; 	
+				total += amount;
 			}
 		}
 	}
@@ -126,13 +134,4 @@ int network_totalLoaned(Network *network, Bank *bank, int filter){
 
 int network_banksNum(Network *network) {
 	return network->banksNum;
-}
-
-void network_terminate(Network *network) {
-	int i;
-	for (i = 0; i < network->banksNum; i++)
-		bank_terminate(network->banks[i]);
-		
-	free(network->banks);
-	free(network);
 }

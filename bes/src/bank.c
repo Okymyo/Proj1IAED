@@ -9,6 +9,12 @@ void bank_init(Bank *bank, char *name, int rating, int reference){
 	bank->loans = NULL;
 }
 
+void bank_terminate(Bank *bank){
+	/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
+	free(bank->loans);
+	free(bank);
+}
+
 void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 	int i;
 	Loan loan;
@@ -46,13 +52,26 @@ void bank_removeLoan(Bank *bank, Loan *loan){
 	bank->loansNum--;
 }
 
+int bank_totalLoaned(Bank *bank, int filter){
+	int i, total = 0, totalFiltered = 0;
+	for(i = 0; i < bank_loansNum(bank); i++){
+		Loan *loan = bank_loan(bank, i);
+		int amount = loan_amount(loan);
+		if(filter && bank_rating(loan_loanee(loan)) == 0){
+			totalFiltered += amount;
+		}
+		total += amount; 	
+	}
+	return filter ? totalFiltered : total;
+}
+
 Loan* bank_loan(Bank *bank, int id){
 	return &bank->loans[id];
 }
 
 Loan* bank_loanByLoanee(Bank *bank, Bank *loanee){
 	int i;
-	for (i = 0; i < bank->loansNum; i++){
+	for (i = 0; i < bank_loansNum(bank); i++){
 		Loan *currentLoan = bank_loan(bank, i);
 		if(loan_loanee(currentLoan) == loanee){
 			return currentLoan;
@@ -61,21 +80,12 @@ Loan* bank_loanByLoanee(Bank *bank, Bank *loanee){
 	return NULL;
 }
 
-int bank_totalLoaned(Bank *bank, int filter){
-	int i, total = 0, totalFiltered = 0;
-	for(i = 0; i < bank->loansNum; i++){
-		Loan *loan = bank_loan(bank, i);
-		int amount = loan->amount;
-		if(filter && loan->loanee->rating == 0){
-			totalFiltered += amount;
-		}
-		total += amount; 	
-	}
-	return filter ? totalFiltered : total;
-}
-
 char* bank_name(Bank *bank){
 	return bank->name;
+}
+
+void bank_setRating(Bank *bank, char rating){
+	bank->rating = rating;
 }
 
 char bank_rating(Bank *bank){
@@ -88,14 +98,4 @@ int bank_reference(Bank *bank){
 
 int bank_loansNum(Bank *bank){
 	return bank->loansNum;
-}
-
-void bank_setRating(Bank *bank, char rating){
-	bank->rating = rating;
-}
-
-void bank_terminate(Bank *bank){
-	/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
-	free(bank->loans);
-	free(bank);
 }

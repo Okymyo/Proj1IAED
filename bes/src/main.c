@@ -13,7 +13,7 @@ IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
 	√ e: add new loan
 	√ p: add amortization
 	√ l: list banks
-	√ K: demote bank
+	√ K: demote worst bank
 	√ x: QUIT
 */
 
@@ -37,18 +37,20 @@ int requestInput(Network *network)
 		{
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
+			Bank *bank;
 			scanf("%d", &reference);
-			/* bank = network_bankByReference(network, reference);
-			bank_setRating(bank, 0); */
+			bank = network_bankByReference(network, reference);
+			bank_setRating(bank, 0);
 			break;
 		}
 		case 'r':
 		{
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
+			Bank *bank;
 			scanf("%d", &reference);
-			/* bank = network_bankByReference(network, reference);
-			bank_setRating(bank, 1); */
+			bank = network_bankByReference(network, reference);
+			bank_setRating(bank, 1);
 			break;
 		}
 		case 'e':
@@ -57,10 +59,12 @@ int requestInput(Network *network)
 			int reference1;
 			int reference2;
 			int amount;
+			Bank *bank1;
+			Bank *bank2;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
-			/* bank1 = network_bankByReference(network, reference1);
+			bank1 = network_bankByReference(network, reference1);
 			bank2 = network_bankByReference(network, reference2);
-			bank_addLoan(bank1, bank2, amount); */
+			bank_addLoan(bank1, bank2, amount);
 			break;
 		}
 		case 'p':
@@ -85,12 +89,17 @@ int requestInput(Network *network)
 		case 'l':
 		{
 			/* STATUS: Unknown */
-			int i, type;
+			int i, j, type;
 			scanf("%d", &type);
 			printf("Temos %d bancos.\n", network->banksNum);
 			for (i = 0; i < network->banksNum; i++){
 				Bank *currentBank = network->banks[i];
 				printf("Banco -> Nome: %s, Ranking: %d, Referencia: %d\n", currentBank->name, currentBank->rating, currentBank->reference);
+				printf("Emprestou dinheiro a %d bancos.\n", currentBank->loansNum);
+				for (j = 0; j < currentBank->loansNum; j++){
+					Loan *currentLoan = bank_loan(currentBank, j);		
+					printf("\tLoan -> Referencia: %d, Montante: %d\n", currentLoan->loanee->reference, currentLoan->amount);
+				}
 			}
 			break;
 		}
@@ -107,7 +116,7 @@ int requestInput(Network *network)
 		}
 		default:
 		{
-			printf("ERROR! Unhandled user input! Aborting!");
+			printf("ERROR! Unhandled user input!\n");
 			/* There's no need to quit everytime we "mis-enter" a command.
 			As said on the project guide: wrong command -> back to start.
 			return QUIT; */

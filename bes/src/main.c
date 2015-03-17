@@ -29,7 +29,7 @@ int requestInput(Network *network)
 			int reference;
 			name = malloc(NAMESIZE*sizeof(char));
 			scanf("%s %d %d", name, &rating, &reference);
-			printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference);
+			/* printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference); */
 			network_addBank(network, name, rating, reference);
 			break;
 		}

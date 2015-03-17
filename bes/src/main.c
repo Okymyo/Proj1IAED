@@ -38,7 +38,8 @@ int requestInput(Network *network)
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
-			/* bank_setRating(bank, 0) MISSING: Use reference to pull correct bank*/
+			/* bank = network_bankByReference(network, reference);
+			bank_setRating(bank, 0) MISSING: Use reference to pull correct bank*/
 			break;
 		}
 		case 'r':

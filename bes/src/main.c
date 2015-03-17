@@ -58,6 +58,9 @@ int requestInput(Network *network)
 			int reference2;
 			int amount;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
+			/* bank1 = network_bankByReference(network, reference1);
+			bank2 = network_bankByReference(network, reference2);
+			bank_addLoan(bank1, bank2, amount); */
 			break;
 		}
 		case 'p':

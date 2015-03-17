@@ -17,10 +17,8 @@ IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
 	√ x: QUIT
 */
 
-int requestInput(Network *network)
-{
-	switch(getchar())
-	{
+int requestInput(Network *network) {
+	switch(getchar()) {
 		case 'a':
 		{
 			/* STATUS: Can be implemented with existing functions */
@@ -110,8 +108,7 @@ int requestInput(Network *network)
 		}
 		case 'x':
 		{
-			/* STATUS: Can be implemented 
-			Command "x": Quit program */
+			/* Command "x": Quits our program */
 			return QUIT;
 		}
 		default:
@@ -124,11 +121,11 @@ int requestInput(Network *network)
 	}
 	/* We never discarded chars in excess from the input buffer.
 	It's a good idea to do that now or else they'll get read. */
-	while ( getchar() != '\n' );
+	while (getchar() != '\n');
 	return CONTINUE;
 }
 
-int main(int argc, char const *argv[]){
+int main(int argc, char const *argv[]) {
 	Network *network;
 	network = malloc(sizeof(Network));
 	network_init(network);

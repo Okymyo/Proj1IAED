@@ -17,8 +17,10 @@ IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
 	√ x: QUIT
 */
 
-int requestInput(Network *network) {
-	switch(getchar()) {
+int requestInput(Network *network)
+{
+	switch(getchar())
+	{
 		case 'a':
 		{
 			/* STATUS: Can be implemented with existing functions */
@@ -27,7 +29,6 @@ int requestInput(Network *network) {
 			int reference;
 			name = malloc(NAMESIZE*sizeof(char));
 			scanf("%s %d %d", name, &rating, &reference);
-			/* printf("Li nome: %s, rating: %d, e referencia: %d\n", name, rating, reference); */
 			network_addBank(network, name, rating, reference);
 			break;
 		}
@@ -35,41 +36,39 @@ int requestInput(Network *network) {
 		{
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
-			Bank *bank;
 			scanf("%d", &reference);
-			bank = network_bankByReference(network, reference);
-			bank_setRating(bank, 0);
+			bank_setRating(
+				network_bankByReference(network, reference),
+				0
+			);
 			break;
 		}
 		case 'r':
 		{
 			/* STATUS: Can be implemented with existing functions */
 			int reference;
-			Bank *bank;
 			scanf("%d", &reference);
-			bank = network_bankByReference(network, reference);
-			bank_setRating(bank, 1);
+			bank_setRating(
+				network_bankByReference(network, reference), 
+				1
+			);
 			break;
 		}
 		case 'e':
 		{
 			/* STATUS: Can be implemented with existing functions */
-			int reference1;
-			int reference2;
-			int amount;
-			Bank *bank1;
-			Bank *bank2;
+			int reference1, reference2, amount;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
-			bank1 = network_bankByReference(network, reference1);
-			bank2 = network_bankByReference(network, reference2);
-			bank_addLoan(bank1, bank2, amount);
+			bank_addLoan(
+				network_bankByReference(network, reference1),
+				network_bankByReference(network, reference2), 
+				amount
+			);
 			break;
 		}
 		case 'p':
 		{
-			int reference1;
-			int reference2;
-			int amount;
+			int reference1, reference2, amount;
 			Loan *loan;
 			Bank *bank;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
@@ -87,7 +86,7 @@ int requestInput(Network *network) {
 		case 'l':
 		{
 			/* STATUS: Unknown */
-			int i, j, type;
+			/*
 			scanf("%d", &type);
 			printf("Temos %d bancos.\n", network->banksNum);
 			for (i = 0; i < network->banksNum; i++){
@@ -99,6 +98,10 @@ int requestInput(Network *network) {
 					printf("\tLoan -> Referencia: %d, Montante: %d\n", currentLoan->loanee->reference, currentLoan->amount);
 				}
 			}
+			*/
+			int type;
+			scanf("%d", &type);
+			network_list(network, type);
 			break;
 		}
 		case 'K':
@@ -108,7 +111,8 @@ int requestInput(Network *network) {
 		}
 		case 'x':
 		{
-			/* Command "x": Quits our program */
+			/* STATUS: Can be implemented 
+			Command "x": Quit program */
 			return QUIT;
 		}
 		default:
@@ -121,15 +125,16 @@ int requestInput(Network *network) {
 	}
 	/* We never discarded chars in excess from the input buffer.
 	It's a good idea to do that now or else they'll get read. */
-	while (getchar() != '\n');
+	while ( getchar() != '\n' );
 	return CONTINUE;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]){
 	Network *network;
 	network = malloc(sizeof(Network));
 	network_init(network);
 	
+	printf("Banco: %lu, Emprestimo: %lu, Network: %lu\n", sizeof(Bank), sizeof(Loan), sizeof(Network));
 	while (requestInput(network) != QUIT);
 
 	network_terminate(network);

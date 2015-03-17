@@ -9,9 +9,11 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount);
 
 void bank_removeLoan(Bank *bank, Loan *loan);
 
+Loan* bank_loan(Bank *bank, int id);
+
 Loan* bank_loanByLoanee(Bank *bank, Bank *loanee);
 
-Loan* bank_loan(Bank *bank, int id);
+int bank_totalLoaned(Bank *bank, int filter);
 
 char* bank_name(Bank *bank);
 

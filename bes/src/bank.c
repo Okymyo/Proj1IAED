@@ -61,6 +61,19 @@ Loan* bank_loanByLoanee(Bank *bank, Bank *loanee){
 	return NULL;
 }
 
+int bank_totalLoaned(Bank *bank, int filter){
+	int i, total = 0, totalFiltered = 0;
+	for(i = 0; i < bank->loansNum; i++){
+		Loan *loan = bank_loan(bank, i);
+		int amount = loan->amount;
+		if(filter && loan->loanee->rating == 0){
+			totalFiltered += amount;
+		}
+		total += amount; 	
+	}
+	return filter ? totalFiltered : total;
+}
+
 char* bank_name(Bank *bank){
 	return bank->name;
 }

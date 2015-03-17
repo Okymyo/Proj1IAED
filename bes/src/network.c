@@ -15,8 +15,10 @@ void network_addBank(Network *network, char *name, char rating, int reference){
 		/* Same thing here as was said above */
 		network->banks = realloc(network->banks, sizeof(Bank*)*(network->banksNum + 1));
 		network->banks[network->banksNum] = bank;
-		network->banksNum++;	
+		network->banksNum++;
+        return;
 	}
+    printf("ERROR! Reference is already being used.\n");
 }
 
 Bank* network_bank(Network *network, int id){

@@ -17,6 +17,7 @@ Bank* bank_new(char *name, int rating, int reference){
 void bank_terminate(Bank *bank){
 	/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
 	free(bank->loans);
+	free(bank->name);
 	free(bank);
 }
 

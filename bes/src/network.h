@@ -9,7 +9,15 @@ void network_terminate(Network *network);
 
 void network_addBank(Network *network, char *name, char rating, int reference);
 
+void network_killWorst(Network *network);
+
+void network_printStatus(Network *network);
+
+void network_printBankStatus(Network *network, Bank *bank, int type);
+
 void network_listBanks(Network *network, int type);
+
+int network_countBanks(Network *network, int rating);
 
 int network_partners(Network *network, Bank *bank);
 

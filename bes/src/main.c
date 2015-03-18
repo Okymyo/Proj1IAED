@@ -7,7 +7,7 @@
 
 /* COMMENT TO DELETE... INTRODUCE EACH LINE INSIDE EACH "CASE" (COMMAND).
 IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
-	√ a: add new bank
+	√ a: add new bank 
 	√ k: rate bank as trash
 	√ r: rate bank as healthy
 	√ e: add new loan
@@ -23,7 +23,6 @@ int requestInput(Network *network)
 	{
 		case 'a':
 		{
-			/* STATUS: Can be implemented with existing functions */
 			char *name;
 			int rating;
 			int reference;
@@ -34,7 +33,6 @@ int requestInput(Network *network)
 		}
 		case 'k':
 		{
-			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
 			bank_setRating(
@@ -45,7 +43,6 @@ int requestInput(Network *network)
 		}
 		case 'r':
 		{
-			/* STATUS: Can be implemented with existing functions */
 			int reference;
 			scanf("%d", &reference);
 			bank_setRating(
@@ -56,7 +53,6 @@ int requestInput(Network *network)
 		}
 		case 'e':
 		{
-			/* STATUS: Can be implemented with existing functions */
 			int reference1, reference2, amount;
 			scanf("%d %d %d", &reference1, &reference2, &amount);
 			bank_addLoan(
@@ -85,20 +81,6 @@ int requestInput(Network *network)
 		}
 		case 'l':
 		{
-			/* STATUS: Unknown */
-			/*
-			scanf("%d", &type);
-			printf("Temos %d bancos.\n", network->banksNum);
-			for (i = 0; i < network->banksNum; i++){
-				Bank *currentBank = network->banks[i];
-				printf("Banco -> Nome: %s, Ranking: %d, Referencia: %d\n", currentBank->name, currentBank->rating, currentBank->reference);
-				printf("Emprestou dinheiro a %d bancos.\n", currentBank->loansNum);
-				for (j = 0; j < currentBank->loansNum; j++){
-					Loan *currentLoan = bank_loan(currentBank, j);		
-					printf("\tLoan -> Referencia: %d, Montante: %d\n", currentLoan->loanee->reference, currentLoan->amount);
-				}
-			}
-			*/
 			int type;
 			scanf("%d", &type);
 			network_listBanks(network, type);
@@ -106,13 +88,12 @@ int requestInput(Network *network)
 		}
 		case 'K':
 		{
-			/* STATUS: Requires new function to be implemented */
+			network_killWorst(network);
 			break;
 		}
 		case 'x':
 		{
-			/* STATUS: Can be implemented 
-			Command "x": Quit program */
+			network_printStatus(network);
 			return QUIT;
 		}
 		default:
@@ -134,7 +115,7 @@ int main(int argc, char const *argv[]){
 	network = malloc(sizeof(Network));
 	network_init(network);
 	
-	printf("Banco: %lu, Emprestimo: %lu, Network: %lu\n", sizeof(Bank), sizeof(Loan), sizeof(Network));
+	/*printf("Banco: %lu, Emprestimo: %lu, Network: %lu\n", sizeof(Bank), sizeof(Loan), sizeof(Network));*/
 	while (requestInput(network) != QUIT);
 
 	network_terminate(network);

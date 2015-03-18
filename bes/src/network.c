@@ -29,58 +29,106 @@ void network_addBank(Network *network, char *name, char rating, int reference) {
     printf("ERROR! Reference is already being used.\n");
 }
 
+void network_killWorst(Network *network){
+	int i;
+	Bank *worst = NULL;
+	for (i = network_banksNum(network)-1; i >= 0; i--){
+		Bank *currentBank = network_bank(network, i);
+		if(bank_rating(currentBank) == 1){
+			int totalLoanedFiltered = bank_totalLoaned(currentBank, 1);
+			if(totalLoanedFiltered > 0){
+				if(worst == NULL || bank_totalLoaned(worst, 1) < totalLoanedFiltered)
+					worst = currentBank;
+			}
+		}	
+	}
+	if(worst != NULL){
+		bank_setRating(worst, 0);
+		printf("*");
+		network_printBankStatus(network, worst, 1);
+	}
+	network_printStatus(network);
+
+}
+
+void network_printStatus(Network *network){
+	printf("Total de bancos: %d, Bancos bons: %d\n", network_banksNum(network),
+	 network_countBanks(network, 1));
+}
+
+void network_printBankStatus(Network *network, Bank *bank, int type){
+	switch(type){
+		case 0:{
+			printf("Bank -> Referencia:%d, Nome:%s, Rating:%d\n", 
+				bank_reference(bank), 
+				bank_name(bank), 
+				bank_rating(bank)
+			);
+			break;
+		}
+		case 1:{
+			printf("Bank -> Referencia:%d, Nome:%s, Rating:%d, Emprestimos recebidos:%d, Emprestimos feitos: %d, Emprestamos:%d dos quais %d sao a bancos maus, Recebemos:%d dos quais %d sao de bancos maus.\n", 
+				bank_reference(bank), 
+				bank_name(bank), 
+				bank_rating(bank),
+				network_loaners(network, bank),
+				bank_loansNum(bank),
+				bank_totalLoaned(bank, 0),
+				bank_totalLoaned(bank, 1),
+				network_totalLoaned(network, bank, 0),
+				network_totalLoaned(network, bank, 1)
+			);
+			break;
+		}
+	}
+}
+
 void network_listBanks(Network *network, int type){
 	int i;
 	switch(type){
 		case 0:{
 			for (i = 0; i < network_banksNum(network); i++){
 				Bank *bank = network_bank(network, i);
-				printf("Bank -> Referencia:%d, Nome:%s, Rating:%d\n", 
-					bank_reference(bank), 
-					bank_name(bank), 
-					bank_rating(bank)
-				);
+				network_printBankStatus(network, bank, type);	
 			}
 			break;
 		}
 		case 1:{
 			for (i = 0; i < network_banksNum(network); i++){
 				Bank *bank = network_bank(network, i);
-				printf("Bank -> Referencia:%d, Nome:%s, Rating:%d, Emprestimos recebidos:%d, Emprestimos feitos: %d, Emprestamos:%d dos quais %d sao a bancos maus, Recebemos:%d dos quais %d sao de bancos maus.\n", 
-					bank_reference(bank), 
-					bank_name(bank), 
-					bank_rating(bank),
-					network_loaners(network, bank),
-					bank_loansNum(bank),
-					bank_totalLoaned(bank, 0),
-					bank_totalLoaned(bank, 1),
-					network_totalLoaned(network, bank, 0),
-					network_totalLoaned(network, bank, 1)
-				);
+				network_printBankStatus(network, bank, type);
 			}
 			break;
 		}
 		case 2:{
-
+			int i, j;
+			for (i = 0; i < network_banksNum(network); i++){
+				int count = 0;
+				for (j = 0; j < network_banksNum(network); j++){
+					Bank *currentBank = network_bank(network, j);
+					if(network_partners(network, currentBank) == i){
+						count++;
+					}
+				}
+				if(count != 0)
+					printf("Numero de bancos com %d parceiros: %d\n", i, count);
+			}
+			break;
 		}
 		default:{
-
+			printf("ERROR! Unhandled type of listing!\n");
 		}
 	}
 }
 
-Bank* network_bank(Network *network, int id) {
-	return network->banks[id];
-}
-
-Bank* network_bankByReference(Network *network, int reference) {
-	int i;
+int network_countBanks(Network *network, int rating){
+	int i, count = 0;
 	for (i = 0; i < network_banksNum(network); i++){
-		Bank *bank = network_bank(network, i);
-		if(bank_reference(bank) == reference)
-			return bank;
+		Bank *currentBank = network_bank(network, i);
+		if(bank_rating(currentBank) == rating)
+			count++;
 	}
-	return NULL;
+	return count;
 }
 
 int network_partners(Network *network, Bank *bank) {
@@ -130,6 +178,20 @@ int network_totalLoaned(Network *network, Bank *bank, int filter){
 		}
 	}
 	return filter ? totalFiltered : total;
+}
+
+Bank* network_bank(Network *network, int id) {
+	return network->banks[id];
+}
+
+Bank* network_bankByReference(Network *network, int reference) {
+	int i;
+	for (i = 0; i < network_banksNum(network); i++){
+		Bank *bank = network_bank(network, i);
+		if(bank_reference(bank) == reference)
+			return bank;
+	}
+	return NULL;
 }
 
 int network_banksNum(Network *network) {

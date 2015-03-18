@@ -1,17 +1,31 @@
 a ola 1 1234
 a stuff 0 123
 a kappa 1 12345
+a bes 0 12
 l 0
 e 1234 123 1500
 e 1234 12345 6000
 e 123 12345 700
+e 1234 12 1500
 l 1
+l 2
+K
 x
 
 
 Bank -> Referencia:1234, Nome:ola, Rating:1
 Bank -> Referencia:123, Nome:stuff, Rating:0
 Bank -> Referencia:12345, Nome:kappa, Rating:1
-Bank -> Referencia:1234, Nome:ola, Rating:1, Emprestimos recebidos:0, Emprestimos feitos: 2, Emprestamos:7500 dos quais 1500 sao a bancos maus, Recebemos:0 dos quais 0 sao de bancos maus.
+Bank -> Referencia:12, Nome:bes, Rating:0
+Bank -> Referencia:1234, Nome:ola, Rating:1, Emprestimos recebidos:0, Emprestimos feitos: 3, Emprestamos:9000 dos quais 3000 sao a bancos maus, Recebemos:0 dos quais 0 sao de bancos maus.
 Bank -> Referencia:123, Nome:stuff, Rating:0, Emprestimos recebidos:1, Emprestimos feitos: 1, Emprestamos:700 dos quais 0 sao a bancos maus, Recebemos:1500 dos quais 0 sao de bancos maus.
 Bank -> Referencia:12345, Nome:kappa, Rating:1, Emprestimos recebidos:2, Emprestimos feitos: 0, Emprestamos:0 dos quais 0 sao a bancos maus, Recebemos:6700 dos quais 700 sao de bancos maus.
+Bank -> Referencia:12, Nome:bes, Rating:0, Emprestimos recebidos:1, Emprestimos feitos: 0, Emprestamos:0 dos quais 0 sao a bancos maus, Recebemos:1500 dos quais 0 sao de bancos maus.
+Numero de bancos com 1 parceiros: 1
+Numero de bancos com 2 parceiros: 2
+Numero de bancos com 3 parceiros: 1
+*Bank -> Referencia:1234, Nome:ola, Rating:0, Emprestimos recebidos:0, Emprestimos feitos: 3, Emprestamos:9000 dos quais 3000 sao a bancos maus, Recebemos:0 dos quais 0 sao de bancos maus.
+Total de bancos: 4, Bancos bons: 1
+Total de bancos: 4, Bancos bons: 1
+
+

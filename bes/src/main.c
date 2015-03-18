@@ -23,20 +23,14 @@ int requestInput(Network *network)
 		{
 			int reference;
 			scanf("%d", &reference);
-			bank_setRating(
-				network_bankByReference(network, reference),
-				0
-			);
+			bank_setRating(network_bankByReference(network, reference), 0);
 			break;
 		}
 		case 'r':
 		{
 			int reference;
 			scanf("%d", &reference);
-			bank_setRating(
-				network_bankByReference(network, reference), 
-				1
-			);
+			bank_setRating(network_bankByReference(network, reference), 1);
 			break;
 		}
 		case 'e':

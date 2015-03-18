@@ -5,7 +5,7 @@
 #define CONTINUE 17
 #define NAMESIZE 41 /* 40 + 1 for '\0' */
 
-/* COMMENT TO DELETE... INTRODUCE EACH LINE INSIDE EACH "CASE" (COMMAND).
+/* COMMENT TO DELETE...
 IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
 	√ a: add new bank 
 	√ k: rate bank as trash

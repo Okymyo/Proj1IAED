@@ -29,8 +29,7 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 			return;
 		}
 	}
-	bank->loans = loan_new(bank->loans, &bank->loansNum, loanee, amount);
-	bank->loansNum++;
+	loan_new(bank, loanee, amount);
 }
 
 void bank_removeLoan(Bank *bank, Loan *loan){

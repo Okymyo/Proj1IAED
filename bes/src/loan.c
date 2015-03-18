@@ -1,15 +1,14 @@
 #include "includes.h"
 #include "loan.h"
 
-Loan* loan_new(Loan *loans, int *loansNum, Bank *loanee, int amount){
+void loan_new(Bank *loaner, Bank *loanee, int amount){
 	/* We should definitely check whether we receive a NULL pointer or not.
 	However, we can't really handle this. If it throws OOM, nothing we can do.
 	Might as well let it throw a segmentation fault, at least it's meaningful */
-	loans = realloc(loans, sizeof(Loan)*(*loansNum+1));
-	loans[*loansNum].loanee = loanee;
-	loans[*loansNum].amount = amount;
-	*loansNum += 1;
-	return loans;
+	loaner->loans = realloc(loaner->loans, sizeof(Loan)*(loaner->loansNum+1));
+	loaner->loans[loaner->loansNum].loanee = loanee;
+	loaner->loans[loaner->loansNum].amount = amount;
+	loaner->loansNum += 1;
 }
 
 int loan_updateAmount(Loan *loan, int delta){

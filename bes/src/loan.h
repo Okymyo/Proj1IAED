@@ -3,7 +3,7 @@
 #include "includes.h"
 #include "bank.h"
 
-void loan_init(Loan *loan, Bank *loanee, int amount);
+Loan* loan_new(Loan *loan, int *loansNum, Bank *loanee, int amount);
 
 int loan_updateAmount(Loan *loan, int delta);
 

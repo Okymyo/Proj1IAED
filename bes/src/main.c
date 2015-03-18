@@ -5,18 +5,6 @@
 #define CONTINUE 17
 #define NAMESIZE 41 /* 40 + 1 for '\0' */
 
-/* COMMENT TO DELETE...
-IMPLEMENTTED INPUT COMMANDS (ACCORDING TO PROJECT'S GUIDE):
-	√ a: add new bank 
-	√ k: rate bank as trash
-	√ r: rate bank as healthy
-	√ e: add new loan
-	√ p: add amortization
-	√ l: list banks
-	√ K: demote worst bank
-	√ x: QUIT
-*/
-
 int requestInput(Network *network)
 {
 	switch(getchar())
@@ -98,10 +86,9 @@ int requestInput(Network *network)
 		}
 		default:
 		{
-			printf("ERROR! Unhandled user input!\n");
-			/* There's no need to quit everytime we "mis-enter" a command.
-			As said on the project guide: wrong command -> back to start.
-			return QUIT; */
+			/* User has input an unknown command or parameter
+			We'll just discard it and request the input again
+			printf("ERROR! Unhandled command!\n"); */
 		}
 	}
 	/* We never discarded chars in excess from the input buffer.
@@ -112,8 +99,7 @@ int requestInput(Network *network)
 
 int main(int argc, char const *argv[]){
 	Network *network;
-	network = malloc(sizeof(Network));
-	network_init(network);
+	network = network_new();
 	
 	/*printf("Banco: %lu, Emprestimo: %lu, Network: %lu\n", sizeof(Bank), sizeof(Loan), sizeof(Network));*/
 	while (requestInput(network) != QUIT);

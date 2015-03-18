@@ -1,12 +1,17 @@
 #include "includes.h"
 #include "bank.h"
 
-void bank_init(Bank *bank, char *name, int rating, int reference){
+Bank* bank_new(char *name, int rating, int reference){
+	/* We should definitely check whether we receive a NULL pointer or not.
+	However, we can't really handle this. If it throws OOM, nothing we can do.
+	Might as well let it throw a segmentation fault, at least it's meaningful */
+	Bank *bank = malloc(sizeof(Bank));
 	bank->name = name;
 	bank->rating = rating;
 	bank->reference = reference;
 	bank->loansNum = 0;
 	bank->loans = NULL;
+	return bank;
 }
 
 void bank_terminate(Bank *bank){
@@ -17,7 +22,6 @@ void bank_terminate(Bank *bank){
 
 void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 	int i;
-	Loan loan;
 	for (i = 0; i < bank_loansNum(bank); i++){
 		Loan *currentLoan = bank_loan(bank, i);
 		if(loan_loanee(currentLoan) == loanee){
@@ -25,12 +29,7 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 			return;
 		}
 	}
-	/* We should definitely check whether we receive a NULL pointer or not.
-	However, we can't really handle this. If it throws OOM, nothing we can do.
-	Might as well let it throw a segmentation fault, at least it's meaningful */
-	bank->loans = realloc(bank->loans, sizeof(Loan)*(bank->loansNum + 1));
-	bank->loans[bank->loansNum] = loan;
-	loan_init(&bank->loans[bank->loansNum], loanee, amount);
+	bank->loans = loan_new(bank->loans, &bank->loansNum, loanee, amount);
 	bank->loansNum++;
 }
 

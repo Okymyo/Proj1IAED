@@ -3,7 +3,7 @@
 #include "includes.h"
 #include "bank.h"	
 
-void network_init(Network *network);
+Network* network_new();
 
 void network_terminate(Network *network);
 

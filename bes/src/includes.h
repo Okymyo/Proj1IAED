@@ -1,5 +1,7 @@
 #pragma once
 
+#define NAMESIZE 41 /* 40 + 1 for '\0' */
+
 /* Standard includes */
 #include <stdio.h>		/* Required for input/output */
 #include <stdlib.h>		/* Required for malloc(), calloc(), realloc(), free */
@@ -18,7 +20,7 @@ struct Network
 
 struct Bank
 {
-	char *name;					/* Pointer to the char[40] name */
+	char name[NAMESIZE];		/* Array of NAMESIZE char, to contain name */
 	char rating;				/* Rating, either 1 or 0, of the bank */
 	unsigned int reference;		/* Reference of the bank */
 	int loansNum;				/* Number of loans made by this bank */

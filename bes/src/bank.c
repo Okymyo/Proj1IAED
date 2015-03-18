@@ -1,12 +1,17 @@
 #include "includes.h"
 #include "bank.h"
 
-Bank* bank_new(char *name, int rating, int reference){
+Bank* bank_new(char name[], int rating, int reference){
+	int i;
 	/* We should definitely check whether we receive a NULL pointer or not.
 	However, we can't really handle this. If it throws OOM, nothing we can do.
 	Might as well let it throw a segmentation fault, at least it's meaningful */
 	Bank *bank = malloc(sizeof(Bank));
-	bank->name = name;
+	for (i = 0; i < NAMESIZE; i++){
+		bank->name[i] = name[i];
+		if(name[i] == '\0')
+			break;
+	}
 	bank->rating = rating;
 	bank->reference = reference;
 	bank->loansNum = 0;
@@ -17,7 +22,6 @@ Bank* bank_new(char *name, int rating, int reference){
 void bank_terminate(Bank *bank){
 	/* Although loans might be a NULL pointer, it's ignored by free if that is the case */
 	free(bank->loans);
-	free(bank->name);
 	free(bank);
 }
 

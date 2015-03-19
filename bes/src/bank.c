@@ -40,13 +40,14 @@ void bank_addLoan(Bank *bank, Bank *loanee, int amount){
 void bank_removeLoan(Bank *bank, Loan *loan){
 	Loan *loans;
 	int index;
-	
+	/* Figure out which index corresponds to our loan */
 	for(index = 0; index < bank->loansNum; index++)
 	{
 		if(loan == &bank->loans[index])
 			break;
 	}
 	
+	/* Allocate new memory, and move everything except the loan to be removed */
 	loans = malloc(sizeof(Loan)*(bank->loansNum -1));
 	memcpy(loans, bank->loans, (index)*sizeof(Loan));
 	memcpy(loans+index, bank->loans + index + 1, (bank->loansNum - index - 1)*sizeof(Loan));

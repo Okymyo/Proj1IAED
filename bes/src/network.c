@@ -121,6 +121,8 @@ void network_listBanks(Network *network, int type){
 		}
 		case 2:{
 			int i, j, *histogram;
+			/* Create a cache, histogram, where the index is the number of partners
+			and the value is the number of banks with that number of partners */
 			histogram = calloc(network_banksNum(network), sizeof(int));
 			for (j = 0; j < network_banksNum(network); j++){
 				histogram[network_partners(network, network_bank(network, j))]++;
@@ -154,10 +156,8 @@ int network_partners(Network *network, Bank *bank) {
 		Bank *currentBank = network_bank(network, i);
 		for (j = 0; j < bank_loansNum(currentBank); j++){
 			Loan *currentLoan = bank_loan(currentBank, j);
-			if(loan_loanee(currentLoan) == bank){
-				if(bank_loanByLoanee(bank, currentBank) == NULL) {
-					total++;
-				}
+			if(loan_loanee(currentLoan) == bank && bank_loanByLoanee(bank, currentBank) == NULL){
+				total++;
 			}
 		}
 	}

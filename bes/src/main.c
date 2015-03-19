@@ -6,6 +6,10 @@
 
 int requestInput(Network *network)
 {
+	/* This serves as a general warning: we use scanf(). A LOT.
+	scanf() can easily cause a buffer overflow, so we can only hope it doesn't.
+	Rather than hoping input was sanitized we should code our own improved reader.
+	However, since we are certain the input was previously sanitized, we won't. */
 	switch(getchar())
 	{
 		case 'a':
@@ -13,8 +17,6 @@ int requestInput(Network *network)
 			char name[NAMESIZE];
 			int rating;
 			int reference;
-			/* scanf can easily cause a buffer overflow here, so we can only hope it doesn't
-			Rather than hoping input was sanitized we should code our own improved reader */
 			scanf("%s %d %d", (char*)&name, &rating, &reference);
 			network_addBank(network, name, rating, reference);
 			break;
@@ -95,7 +97,6 @@ int main(int argc, char const *argv[]){
 	Network *network;
 	network = network_new();
 	
-	/*printf("Banco: %lu, Emprestimo: %lu, Network: %lu\n", sizeof(Bank), sizeof(Loan), sizeof(Network));*/
 	while (requestInput(network) != QUIT);
 
 	network_terminate(network);

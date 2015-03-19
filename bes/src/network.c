@@ -29,6 +29,7 @@ void network_addBank(Network *network, char *name, char rating, int reference) {
 		network->banksNum++;
         return;
 	}
+	/* If it ever reaches this line, someone messed up, and it wasn't us */
     printf("ERROR! Reference is already being used.\n");
 }
 
@@ -51,12 +52,11 @@ void network_killWorst(Network *network){
 		network_printBankStatus(network, worst, 1);
 	}
 	network_printStatus(network);
-
 }
 
 void network_printStatus(Network *network){
-	printf("Total de bancos: %d, Bancos bons: %d\n", network_banksNum(network),
-	 network_countBanks(network, 1));
+	/*printf("Total de bancos: %d, Bancos bons: %d\n", network_banksNum(network), network_countBanks(network, 1));*/
+	printf("%d %d\n", network_banksNum(network), network_countBanks(network, 1));
 }
 
 void network_printBankStatus(Network *network, Bank *bank, int type){
@@ -70,7 +70,18 @@ void network_printBankStatus(Network *network, Bank *bank, int type){
 			break;
 		}
 		case 1:{
-			printf("Bank -> Referencia:%d, Nome:%s, Rating:%d, Emprestimos recebidos:%d, Emprestimos feitos: %d, Emprestamos:%d dos quais %d sao a bancos maus, Recebemos:%d dos quais %d sao de bancos maus.\n", 
+			/*printf("Bank -> Referencia:%d, Nome:%s, Rating:%d, Emprestimos recebidos:%d, Emprestimos feitos: %d, Emprestamos:%d dos quais %d sao a bancos maus, Recebemos:%d dos quais %d sao de bancos maus.\n", 
+				bank_reference(bank), 
+				bank_name(bank), 
+				bank_rating(bank),
+				network_loaners(network, bank),
+				bank_loansNum(bank),
+				bank_totalLoaned(bank, 0),
+				bank_totalLoaned(bank, 1),
+				network_totalLoaned(network, bank, 0),
+				network_totalLoaned(network, bank, 1)
+			);*/
+			printf("%d %s %d %d %d %d %d %d %d\n", 
 				bank_reference(bank), 
 				bank_name(bank), 
 				bank_rating(bank),
@@ -114,7 +125,8 @@ void network_listBanks(Network *network, int type){
 					}
 				}
 				if(count != 0)
-					printf("Numero de bancos com %d parceiros: %d\n", i, count);
+					/*printf("Numero de bancos com %d parceiros: %d\n", i, count);*/
+					printf("%d %d\n", i, count);
 			}
 			break;
 		}

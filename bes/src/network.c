@@ -62,7 +62,12 @@ void network_printStatus(Network *network){
 void network_printBankStatus(Network *network, Bank *bank, int type){
 	switch(type){
 		case 0:{
-			printf("Bank -> Referencia:%d, Nome:%s, Rating:%d\n", 
+			/*printf("Bank -> Referencia:%d, Nome:%s, Rating:%d\n", 
+				bank_reference(bank), 
+				bank_name(bank), 
+				bank_rating(bank)
+			);*/
+			printf("%d %s %d\n", 
 				bank_reference(bank), 
 				bank_name(bank), 
 				bank_rating(bank)

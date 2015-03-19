@@ -120,18 +120,15 @@ void network_listBanks(Network *network, int type){
 			break;
 		}
 		case 2:{
-			int i, j;
+			int i, j, *histogram;
+			histogram = calloc(network_banksNum(network), sizeof(int));
+			for (j = 0; j < network_banksNum(network); j++){
+				histogram[network_partners(network, network_bank(network, j))]++;
+			}
 			for (i = 0; i < network_banksNum(network); i++){
-				int count = 0;
-				for (j = 0; j < network_banksNum(network); j++){
-					Bank *currentBank = network_bank(network, j);
-					if(network_partners(network, currentBank) == i){
-						count++;
-					}
-				}
-				if(count != 0)
+				if(histogram[i] != 0)
 					/*printf("Numero de bancos com %d parceiros: %d\n", i, count);*/
-					printf("%d %d\n", i, count);
+					printf("%d %d\n", i, histogram[i]);
 			}
 			break;
 		}

@@ -1,7 +1,7 @@
 #include "includes.h"
 #include "bank.h"
 
-Bank* bank_new(char name[], int rating, int reference){
+Bank* bank_new(char name[], char rating, unsigned int reference){
 	int i;
 	/* We should definitely check whether we receive a NULL pointer or not.
 	However, we can't really handle this. If it throws OOM, nothing we can do.

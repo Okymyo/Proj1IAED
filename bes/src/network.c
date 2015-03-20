@@ -132,6 +132,7 @@ void network_listBanks(Network *network, int type){
 					/*printf("Numero de bancos com %d parceiros: %d\n", i, count);*/
 					printf("%d %d\n", i, histogram[i]);
 			}
+			free(histogram);
 			break;
 		}
 		default:{

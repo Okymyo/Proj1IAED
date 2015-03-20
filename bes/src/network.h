@@ -31,7 +31,7 @@ void network_addBank(Network *network, char *name, char rating, int reference);
 void network_killWorst(Network *network);
 
 /*
-* Prints the current amount of banks spaced with the current amount of bad banks.
+* Prints the current amount of banks spaced with the current amount of good banks.
 * @param network Network to print the status of.
 */
 void network_printStatus(Network *network);

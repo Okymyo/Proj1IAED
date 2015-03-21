@@ -12,13 +12,18 @@ typedef struct Network Network;
 typedef struct Bank Bank;
 typedef struct Loan Loan;
 
+/* Specific Structures */
+typedef struct Cache Cache;
+
 struct Network
 {
 	int banksNum;				/* Number of banks in the network */
 	Bank **banks;				/* Pointer to the array of bank pointers */
-};	/* Size: 4 + 8 = 12
-	   Real Size: 16 
-	   Lost bytes: 4 */
+	Cache *refsCache;			/* Our small cache of references */
+	int *bankRefs;
+};	/* Size: 4 + 8 + 8 = 20
+	   Real Size: 32
+	   Lost bytes: 12 */
 
 struct Bank
 {
@@ -38,3 +43,12 @@ struct Loan
 };	/* Size: 8 + 4 = 12
 	   Real Size: 16
 	   Lost bytes: 4 */
+
+struct Cache
+{
+	int value;					/* Reference to a single bank */
+	Bank *bank;					/* Pointer to a single bank */
+	int uses;					/* Number of times cached value has been used */
+};	/* Size: 4 + 8 + 4 = 16
+	   Real Size: 16
+	   Lost bytes: 0 */

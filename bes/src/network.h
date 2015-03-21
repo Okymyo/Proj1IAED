@@ -106,3 +106,8 @@ Bank* network_bankByReference(Network *network, int reference);
 * @return        Number of banks of the given network.
 */
 int network_banksNum(Network *network);
+
+
+void network_addToCache(Network *network, int reference, Bank *bank);
+
+void network_sortCache(Network *network);

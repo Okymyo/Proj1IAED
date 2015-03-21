@@ -1,6 +1,6 @@
 #include "network.h"
 
-#define CACHESIZE 8
+#define CACHESIZE 32
 
 Network* network_new(){
 	/* We should definitely check whether we receive a NULL pointer or not.
@@ -9,7 +9,7 @@ Network* network_new(){
 	Network *network = malloc(sizeof(Network));
 	network->banksNum = 0;
 	network->banks = NULL;
-	network->refsCache = calloc(CACHESIZE, sizeof(Cache));
+	network->refsCache = calloc(CACHESIZE, sizeof(RefCache));
 	network->bankRefs = NULL;
 	return network;
 }
@@ -23,7 +23,7 @@ void network_terminate(Network *network) {
 	free(network);
 }
 
-void network_addBank(Network *network, char *name, char rating, int reference) {
+void network_addBank(Network *network, char *name, char rating, unsigned int reference) {
 	if(network_bankByReference(network, reference) == NULL){
 		Bank *bank = bank_new(name, rating, reference);
 		/* We should definitely check whether we receive a NULL pointer or not.
@@ -188,13 +188,13 @@ Bank* network_bank(Network *network, int id) {
 	return network->banks[id];
 }
 
-Bank* network_bankByReference(Network *network, int reference) {
+Bank* network_bankByReference(Network *network, unsigned int reference) {
 	int i;
 	Bank *bank = NULL;
 	
 	/* In come the magical properties of caches! */
 	for (i = 0; i < CACHESIZE; i++){
-		if (network->refsCache[i].value == reference){
+		if (network->refsCache[i].reference == reference){
 			network->refsCache[i].uses++;
 			return network->refsCache[i].bank;
 		}
@@ -208,7 +208,7 @@ Bank* network_bankByReference(Network *network, int reference) {
 		}
 	}
 	
-	/* Lets put that hard-earned value back into our cache */
+	/* Lets put that hard-earned pointer back into our cache */
 	if (bank != NULL)
 		network_addToCache(network, reference, bank);
 	
@@ -219,10 +219,10 @@ int network_banksNum(Network *network) {
 	return network->banksNum;
 }
 
-void network_addToCache(Network *network, int reference, Bank *bank){
+void network_addToCache(Network *network, unsigned int reference, Bank *bank){
 	/* Why did we decide to use a cache?
-	Odds are, if we just used a reference, we'll use it again
-	We thought the CPU would automatically cache that. But it doesn't.
+	Odds are, if we just used a reference, we'll use it again.
+	One would think the CPU would automatically cache that, but it doesn't.
 	So, we cache it ourselves! */
 	int i, lowestUsesID = 0, lowestUses = network->refsCache[0].uses;
 	for (i = 1; i < CACHESIZE; i++){
@@ -231,7 +231,7 @@ void network_addToCache(Network *network, int reference, Bank *bank){
 			lowestUsesID = i;
 		}
 	}
-	network->refsCache[lowestUsesID].value = reference;
+	network->refsCache[lowestUsesID].reference = reference;
 	network->refsCache[lowestUsesID].bank = bank;
 	network->refsCache[lowestUsesID].uses = 1;
 }

@@ -83,7 +83,7 @@ char bank_rating(Bank *bank);
 * @param bank Bank to get the reference from.
 * @return     Reference of a given bank.
 */
-int bank_reference(Bank *bank);
+unsigned int bank_reference(Bank *bank);
 
 /*
 * Gives the number of loans of a bank.

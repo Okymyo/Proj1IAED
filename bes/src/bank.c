@@ -96,7 +96,7 @@ char bank_rating(Bank *bank){
 	return bank->rating;
 }
 
-int bank_reference(Bank *bank){
+unsigned int bank_reference(Bank *bank){
 	return bank->reference;
 }
 

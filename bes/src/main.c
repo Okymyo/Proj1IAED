@@ -16,29 +16,30 @@ int requestInput(Network *network)
 		{
 			char name[NAMESIZE];
 			int rating;
-			int reference;
-			scanf("%s %d %d", (char*)&name, &rating, &reference);
+			unsigned int reference;
+			scanf("%s %d %u", (char*)&name, &rating, &reference);
 			network_addBank(network, name, rating, reference);
 			break;
 		}
 		case 'k':
 		{
-			int reference;
-			scanf("%d", &reference);
+			unsigned int reference;
+			scanf("%u", &reference);
 			bank_setRating(network_bankByReference(network, reference), 0);
 			break;
 		}
 		case 'r':
 		{
-			int reference;
-			scanf("%d", &reference);
+			unsigned int reference;
+			scanf("%u", &reference);
 			bank_setRating(network_bankByReference(network, reference), 1);
 			break;
 		}
 		case 'e':
 		{
-			int reference1, reference2, amount;
-			scanf("%d %d %d", &reference1, &reference2, &amount);
+			unsigned int reference1, reference2;
+			int amount;
+			scanf("%u %u %d", &reference1, &reference2, &amount);
 			bank_addLoan(
 				network_bankByReference(network, reference1),
 				network_bankByReference(network, reference2), 
@@ -48,10 +49,11 @@ int requestInput(Network *network)
 		}
 		case 'p':
 		{
-			int reference1, reference2, amount;
+			unsigned int reference1, reference2;
+			int amount;
 			Loan *loan;
 			Bank *bank;
-			scanf("%d %d %d", &reference1, &reference2, &amount);
+			scanf("%u %u %d", &reference1, &reference2, &amount);
 			
 			/* Since we're using it twice, store both loan and bank */
 			bank = network_bankByReference(network, reference2);

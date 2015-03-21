@@ -22,7 +22,7 @@ void network_terminate(Network *network);
 * @param rating    Rating of the new bank.
 * @param reference Reference of the new bank.
 */
-void network_addBank(Network *network, char *name, char rating, int reference);
+void network_addBank(Network *network, char *name, char rating, unsigned int reference);
 
 /*
 * Sets the rating of the worst good bank to bad.
@@ -98,7 +98,7 @@ Bank* network_bank(Network *network, int id);
 * @param reference Reference of the bank to fetch.
 * @return          Pointer of the bank with the given reference within a given network.
 */
-Bank* network_bankByReference(Network *network, int reference);
+Bank* network_bankByReference(Network *network, unsigned int reference);
 
 /*
 * Gives the number of banks of a network.
@@ -108,6 +108,6 @@ Bank* network_bankByReference(Network *network, int reference);
 int network_banksNum(Network *network);
 
 
-void network_addToCache(Network *network, int reference, Bank *bank);
+void network_addToCache(Network *network, unsigned int reference, Bank *bank);
 
 void network_sortCache(Network *network);

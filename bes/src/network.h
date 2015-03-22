@@ -108,6 +108,6 @@ Bank* network_bankByReference(Network *network, unsigned int reference);
 int network_banksNum(Network *network);
 
 
-void network_addToCache(Network *network, unsigned int reference, Bank *bank);
+void network_addToCache(RefCache *refsCache, unsigned int reference, Bank *bank);
 
-void network_sortCache(Network *network);
+void network_repositionInCache(RefCache *refsCache, int index);

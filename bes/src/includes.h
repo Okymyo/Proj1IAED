@@ -47,5 +47,4 @@ struct RefCache
 {
 	unsigned int reference;		/* Reference to a single bank. */
 	Bank *bank;					/* Pointer to a single bank. */
-	int uses;					/* Number of times this cached reference has been used. */
-};	/* Size: 4 + 8 + 4 = 16 */
+};	/* Size: 4 + 8 = 12 */

@@ -1,6 +1,6 @@
 #include "network.h"
 
-#define CACHESIZE 32
+#define CACHESIZE 32  /* Minimum of 2! */
 
 Network* network_new(){
 	/* We should definitely check whether we receive a NULL pointer or not.
@@ -35,7 +35,7 @@ void network_addBank(Network *network, char *name, char rating, unsigned int ref
 		network->banks[network->banksNum] = bank;
 		network->bankRefs[network->banksNum] = reference;
 		network->banksNum++;
-		network_addToCache(network, reference, bank);
+		network_addToCache(network->refsCache, reference, bank);
         return;
 	}
 	/* If it ever reaches this line, someone messed up, and it wasn't us */
@@ -196,7 +196,10 @@ Bank* network_bankByReference(Network *network, unsigned int reference) {
 	/* In come the magical properties of caches! */
 	for (i = 0; i < CACHESIZE; i++){
 		if (network->refsCache[i].reference == reference){
-			network->refsCache[i].uses++;
+			if (i > CACHESIZE/2){
+				network_repositionInCache(network->refsCache, i);
+				return network->refsCache[0].bank;
+			}
 			return network->refsCache[i].bank;
 		}
 	}
@@ -211,7 +214,7 @@ Bank* network_bankByReference(Network *network, unsigned int reference) {
 	
 	/* Lets put that hard-earned pointer back into our cache */
 	if (bank != NULL)
-		network_addToCache(network, reference, bank);
+		network_addToCache(network->refsCache, reference, bank);
 	
 	return bank;
 }
@@ -220,19 +223,22 @@ int network_banksNum(Network *network) {
 	return network->banksNum;
 }
 
-void network_addToCache(Network *network, unsigned int reference, Bank *bank){
+void network_addToCache(RefCache *refsCache, unsigned int reference, Bank *bank){
 	/* Why did we decide to use a cache?
 	Odds are, if we just used a reference, we'll use it again.
 	One would think the CPU would automatically cache that, but it doesn't.
 	So, we cache it ourselves! */
-	int i, lowestUsesID = 0, lowestUses = network->refsCache[0].uses;
-	for (i = 1; i < CACHESIZE; i++){
-		if (network->refsCache[i].uses < lowestUses){
-			lowestUses = network->refsCache[i].uses;
-			lowestUsesID = i;
-		}
-	}
-	network->refsCache[lowestUsesID].reference = reference;
-	network->refsCache[lowestUsesID].bank = bank;
-	network->refsCache[lowestUsesID].uses = 1;
+	memcpy(refsCache + 1, refsCache, sizeof(RefCache)*(CACHESIZE - 1));
+	refsCache[0].reference = reference;
+	refsCache[0].bank = bank;
+}
+
+void network_repositionInCache(RefCache *refsCache, int index){
+	/* Our cache needs to be extremely fast, so we can't take much time.
+	What we're doing here is moving an "old" record back to the beginning.
+	And to do that, we move everything else up until that record's old position 
+	This is done to avoid pruning a useful cached reference */
+	RefCache temp = refsCache[index];
+	memcpy(refsCache + 1, refsCache, sizeof(RefCache)*(index));
+	refsCache[0] = temp;
 }

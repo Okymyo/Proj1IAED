@@ -107,7 +107,17 @@ Bank* network_bankByReference(Network *network, unsigned int reference);
 */
 int network_banksNum(Network *network);
 
-
+/*
+* Adds a reference/bank combination to the cache.
+* @param refsCache Cache to which we'll add the record.
+* @param reference Reference of the bank we're caching.
+* @param bank      Pointer to the bank we're caching.
+*/
 void network_addToCache(RefCache *refsCache, unsigned int reference, Bank *bank);
 
+/*
+* Repositions a given record to the first position in cache.
+* @param refsCache Cache in which we'll reposition the record.
+* @param index     Index of the record we're repositioning.
+*/
 void network_repositionInCache(RefCache *refsCache, int index);

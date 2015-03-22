@@ -91,7 +91,7 @@ int requestInput(Network *network)
 	}
 	/* We never discarded chars in excess from the input buffer.
 	It's a good idea to do that now or else they'll get read. */
-	while ( getchar() != '\n' );
+	while ( getchar() != '\n' && getchar() != EOF );
 	return CONTINUE;
 }
 

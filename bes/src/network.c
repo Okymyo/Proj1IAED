@@ -15,6 +15,7 @@ Network* network_new(){
 }
 
 void network_terminate(Network *network) {
+	/* Essentially deallocate every block we have previously allocated */
 	int i;
 	for (i = 0; i < network->banksNum; i++)
 		bank_terminate(network->banks[i]);
@@ -139,6 +140,8 @@ int network_countBanks(Network *network, int rating){
 }
 
 int network_partners(Network *network, Bank *bank) {
+	/* Count every bank that loaned our bank any money,
+	but to which our bank never loaned any money */
 	int i, j, total = 0;
 	for (i = 0; i < network_banksNum(network); i++){
 		Bank *currentBank = network_bank(network, i);
@@ -149,6 +152,7 @@ int network_partners(Network *network, Bank *bank) {
 			}
 		}
 	}
+	/* Since we ignored all banks to which our bank had loans, we add them now */
 	total+=bank->loansNum;
 	return total;
 }

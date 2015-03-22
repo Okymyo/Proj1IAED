@@ -19,6 +19,7 @@ void network_terminate(Network *network) {
 	for (i = 0; i < network->banksNum; i++)
 		bank_terminate(network->banks[i]);
 	free(network->banks);
+	free(network->bankRefs);
 	free(network->refsCache);
 	free(network);
 }
@@ -30,8 +31,8 @@ void network_addBank(Network *network, char *name, char rating, unsigned int ref
 		However, we can't really handle this. If it throws OOM, nothing we can do.
 		Might as well let it throw a segmentation fault, at least it's meaningful */
 		network->banks = realloc(network->banks, sizeof(Bank*)*(network->banksNum + 1));
-		network->banks[network->banksNum] = bank;
 		network->bankRefs = realloc(network->bankRefs, sizeof(int)*(network->banksNum + 1));
+		network->banks[network->banksNum] = bank;
 		network->bankRefs[network->banksNum] = reference;
 		network->banksNum++;
 		network_addToCache(network, reference, bank);

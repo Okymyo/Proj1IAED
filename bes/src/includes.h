@@ -17,38 +17,35 @@ typedef struct RefCache RefCache;
 
 struct Network
 {
-	int banksNum;				/* Number of banks in the network */
-	Bank **banks;				/* Pointer to the array of bank pointers */
-	unsigned int *bankRefs;		/* Our vector with every reference */
-	RefCache *refsCache;		/* Our small cache of references */
-};	/* Size: 4 + 8 + 8 = 20
-	   Real Size: 32
-	   Lost bytes: 12 */
+	int banksNum;				/* Number of banks in the network. */
+	Bank **banks;				/* Pointer to the array of bank pointers. */
+	unsigned int *bankRefs;		/* Our vector with every reference.
+								As noted below, we will be storing the reference twice for the sake
+								of performance during the reference lookup process. */
+	RefCache *refsCache;		/* Our small cache of references. */
+};	/* Size: 4 + 8 + 8 + 8 = 28 */
 
 struct Bank
 {
-	char name[NAMESIZE];		/* Array of NAMESIZE char, to contain name */
-	char rating;				/* Rating, either 1 or 0, of the bank */
-	unsigned int reference;		/* Reference of the bank */
-	int loansNum;				/* Number of loans made by this bank */
-	Loan *loans;				/* Pointer to the array of loans */
-};	/* Size: 41 + 1 + 4 + 4 + 8 = 58
-	   Real Size: 64 
-	   Lost bytes: 6 */
+	char name[NAMESIZE];		/* Array of NAMESIZE char, to contain name. */
+	char rating;				/* Rating, either 1 or 0, of the bank. */
+	unsigned int reference;		/* Reference of the bank.
+								Rather than hurting performance, we decided to hurt our memory allocation.
+								We effectively waste 4 bytes by redundantly storing the references twice.
+								However, since this speeds up our lookup process, it's a worthy sacrifice. */
+	int loansNum;				/* Number of loans made by this bank. */
+	Loan *loans;				/* Pointer to the array of loans. */
+};	/* Size: 41 + 1 + 4 + 4 + 8 = 58 */
 
 struct Loan
 {
-	Bank *loanee;				/* Pointer to the bank receiving the loan */
-	int amount;					/* Amount of money lent */
-};	/* Size: 8 + 4 = 12
-	   Real Size: 16
-	   Lost bytes: 4 */
+	Bank *loanee;				/* Pointer to the bank receiving the loan. */
+	int amount;					/* Amount lent in this specific loan. */
+};	/* Size: 8 + 4 = 12 */
 
 struct RefCache
 {
-	unsigned int reference;		/* Reference to a single bank */
-	Bank *bank;					/* Pointer to a single bank */
-	int uses;					/* Number of times cached reference has been used */
-};	/* Size: 4 + 8 + 4 = 16
-	   Real Size: 16
-	   Lost bytes: 0 */
+	unsigned int reference;		/* Reference to a single bank. */
+	Bank *bank;					/* Pointer to a single bank. */
+	int uses;					/* Number of times this cached reference has been used. */
+};	/* Size: 4 + 8 + 4 = 16 */

@@ -240,7 +240,7 @@ void network_addToCache(RefCache *refsCache, unsigned int reference, Bank *bank)
 	Odds are, if we just used a reference, we'll use it again.
 	One would think the CPU would automatically cache that, but it doesn't.
 	So, we cache it ourselves! */
-	memcpy(refsCache + 1, refsCache, sizeof(RefCache)*(CACHESIZE - 1));
+	memmove(refsCache + 1, refsCache, sizeof(RefCache)*(CACHESIZE - 1));
 	refsCache[0].reference = reference;
 	refsCache[0].bank = bank;
 }
@@ -251,6 +251,6 @@ void network_repositionInCache(RefCache *refsCache, int index){
 	And to do that, we move everything else up until that record's old position 
 	This is done to avoid pruning a useful cached reference */
 	RefCache temp = refsCache[index];
-	memcpy(refsCache + 1, refsCache, sizeof(RefCache)*(index));
+	memmove(refsCache + 1, refsCache, sizeof(RefCache)*(index));
 	refsCache[0] = temp;
 }

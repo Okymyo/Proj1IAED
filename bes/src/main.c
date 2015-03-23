@@ -32,14 +32,14 @@ int requestInput(Network *network)
 		{
 			unsigned int reference;
 			scanf("%u", &reference);
-			bank_setRating(network_bankByReference(network, reference), 0);
+			bank_setRating(network_bankByReference(network, reference), BAD_RATING);
 			break;
 		}
 		case 'r':
 		{
 			unsigned int reference;
 			scanf("%u", &reference);
-			bank_setRating(network_bankByReference(network, reference), 1);
+			bank_setRating(network_bankByReference(network, reference), GOOD_RATING);
 			break;
 		}
 		case 'e':

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#define NAMESIZE 41 /* 40 + 1 for '\0' */
+#define NAMESIZE 42 /* 41 + 1 for '\0' */
 #define BAD_RATING 0
 #define GOOD_RATING 1
 

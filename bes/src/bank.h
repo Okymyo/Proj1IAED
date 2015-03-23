@@ -1,3 +1,10 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #pragma once
 
 #include "includes.h"
@@ -36,7 +43,7 @@ void bank_removeLoan(Bank *bank, Loan *loan);
 /*
 * Gives the total amount loaned of a bank.
 * @param bank   Bank to know the total amount loaned.
-* @param filter When > 1 will filter and only return the total amount loaned to banks with bad rating.
+* @param filter When != 0 will filter and only return the total amount loaned to banks with bad rating.
 * @return       The total amount loaned of the given bank.
 */
 int bank_totalLoaned(Bank *bank, int filter);

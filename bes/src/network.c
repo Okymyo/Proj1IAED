@@ -1,3 +1,10 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #include "network.h"
 
 #define CACHESIZE 32  /* Minimum of 2! */
@@ -48,7 +55,7 @@ void network_killWorst(Network *network){
 	Bank *worst = NULL;
 	for (i = network_banksNum(network)-1; i >= 0; i--){
 		Bank *currentBank = network_bank(network, i);
-		if(bank_rating(currentBank) == 1){
+		if(bank_rating(currentBank) == GOOD_RATING){
 			int totalLoanedFiltered = bank_totalLoaned(currentBank, 1);
 			if(totalLoanedFiltered > 0){
 				if(worstLoaned < totalLoanedFiltered){
@@ -59,7 +66,7 @@ void network_killWorst(Network *network){
 		}	
 	}
 	if(worst != NULL){
-		bank_setRating(worst, 0);
+		bank_setRating(worst, BAD_RATING);
 		printf("*");
 		network_printBankStatus(network, worst, 1);
 	}
@@ -179,13 +186,14 @@ int network_totalLoaned(Network *network, Bank *bank, int filter){
 			Loan *currentLoan = bank_loan(currentBank, j);
 			if(loan_loanee(currentLoan) == bank){
 				int amount = loan_amount(currentLoan);
-				if(filter && bank_rating(currentBank) == 0){
+				if(filter && bank_rating(currentBank) == BAD_RATING){
 					totalFiltered += amount;
 				}
 				total += amount;
 			}
 		}
 	}
+	/* If we decide to filter, count only bad rankings; otherwise, count all */
 	return filter ? totalFiltered : total;
 }
 

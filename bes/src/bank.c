@@ -1,3 +1,10 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #include "includes.h"
 #include "bank.h"
 
@@ -61,11 +68,12 @@ int bank_totalLoaned(Bank *bank, int filter){
 	for(i = 0; i < bank_loansNum(bank); i++){
 		Loan *loan = bank_loan(bank, i);
 		int amount = loan_amount(loan);
-		if(filter && bank_rating(loan_loanee(loan)) == 0){
+		if(filter && bank_rating(loan_loanee(loan)) == BAD_RATING){
 			totalFiltered += amount;
 		}
 		total += amount; 	
 	}
+	/* If we decide to filter, only count loans to banks with a poor rating; otherwise, count all */
 	return filter ? totalFiltered : total;
 }
 

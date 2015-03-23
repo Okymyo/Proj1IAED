@@ -1,8 +1,15 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #include "includes.h"
 #include "main.h"
 
-#define QUIT 11
-#define CONTINUE 17
+#define QUIT 1
+#define CONTINUE 0
 
 int requestInput(Network *network)
 {

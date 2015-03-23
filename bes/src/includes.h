@@ -1,6 +1,15 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #pragma once
 
 #define NAMESIZE 41 /* 40 + 1 for '\0' */
+#define BAD_RATING 0
+#define GOOD_RATING 1
 
 /* Standard includes */
 #include <stdio.h>		/* Required for standard input/output */

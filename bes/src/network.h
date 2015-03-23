@@ -1,3 +1,10 @@
+/* =====================
+ * Grupo 5, IAED, LEIC-T
+ * 81900 - Nuno Anselmo
+ * 81943 - Gonçalo Matos
+ * 82047 - André Mendes
+   ===================== */
+
 #pragma once
 
 #include "includes.h"
@@ -80,7 +87,7 @@ int network_loaners(Network *network, Bank *bank);
 * Total amount of money loaned to a bank, over a network.
 * @param network Network where the bank to count the amount loaned is.
 * @param bank    Bank to count the amount loaned to it.
-* @param filter  When > 1 will filter and only return the total amount loaned from banks with bad rating.
+* @param filter  When != 0 will filter and only return the total amount loaned from banks with bad rating.
 */
 int network_totalLoaned(Network *network, Bank *bank, int filter);
 

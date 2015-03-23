@@ -7,14 +7,14 @@
 
 #pragma once
 
-#define NAMESIZE 42 /* 41 + 1 for '\0' */
+#define NAMESIZE 42		/* 41 + 1 for '\0' */
 #define BAD_RATING 0
 #define GOOD_RATING 1
 
 /* Standard includes */
 #include <stdio.h>		/* Required for standard input/output */
 #include <stdlib.h>		/* Required for malloc(), calloc(), realloc(), free() */
-#include <string.h>		/* Required for memcpy() and strcpy() */
+#include <string.h>		/* Required for memcpy(), memmove() and strcpy() */
 
 /* General structures */
 typedef struct Network Network;
@@ -44,7 +44,7 @@ struct Bank
 								However, since this speeds up our lookup process, it's a worthy sacrifice. */
 	int loansNum;				/* Number of loans made by this bank. */
 	Loan *loans;				/* Pointer to the array of loans. */
-};	/* Size: 41 + 1 + 4 + 4 + 8 = 58 */
+};	/* Size: 42 + 1 + 4 + 4 + 8 = 59 */
 
 struct Loan
 {

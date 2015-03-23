@@ -66,7 +66,7 @@ int requestInput(Network *network)
 			bank = network_bankByReference(network, reference2);
 			loan = bank_loanByLoanee(bank, network_bankByReference(network, reference1));
 			
-			/* Update loan. If it becomes 0 or negative, it'll return True, to deallocate loan */
+			/* Update loan. If it becomes 0 or negative it'll return True, to deallocate loan */
 			if(loan_updateAmount(loan, (-1)*amount))
 				bank_removeLoan(bank, loan);
 			
@@ -92,7 +92,8 @@ int requestInput(Network *network)
 		default:
 		{
 			/* User has input an unknown command or parameter
-			We'll just discard it and request the input again
+			We'll just discard it and request the input again */
+			/* We're commenting our error printing since it might get erroneously detected as a bug.
 			printf("ERROR! Unhandled command!\n"); */
 		}
 	}
